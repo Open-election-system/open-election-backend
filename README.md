@@ -2,6 +2,7 @@
 
 ## Adding secret keys
 In the root directory create a file **env_variables.yaml** and paste the following content:
+
 ```shell
 env_variables:
   FIREBASE_PROJECT_ID: 'project_id'
