@@ -1,3 +1,9 @@
 from flask_restplus import Namespace, Resource, fields
 
-namespace = Namespace('elections', description='Operations related to root')
+from app import db
+
+# Initialize namespace
+namespace = Namespace('elections', description='Operations related to elections')
+
+# Initialize db collection
+collection = db.collection('elections')
