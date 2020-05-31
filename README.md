@@ -22,7 +22,7 @@ gunicorn --bind 0.0.0.0:8080 wsgi
 ### windows
 ```shell
 python3 -m venv venv
-source venv/bin/activate
+\venv\Scripts\activate.bat
 python3 setup.py develop
 python3 wsgi.py
 ```
