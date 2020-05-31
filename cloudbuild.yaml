@@ -1,4 +1,6 @@
 steps:
-- name: "gcr.io/cloud-builders/gcloud"
+ - name: gcr.io/cloud-builders/gcloud
+  args: [ 'config', 'set', 'compute/zone', 'us-central1-a']
+ - name: gcr.io/cloud-builders/gcloud
   args: ["app", "deploy"]
 timeout: "1600s"
