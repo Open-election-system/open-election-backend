@@ -1,9 +1,14 @@
 from flask import Flask, jsonify, request
 from flask_restplus import Namespace, Resource, fields
 
+from app.api.controller import Controller
+
 from app.api.users import namespace, collection
-from app.api.users.data import USERS
-from app.api.users.serializers import user
+from app.api.users.models import user
+from app.api.controller import Controller
+
+
+user_controller = Controller(collection)
 
 @namespace.route('')
 class UserList(Resource):
@@ -11,24 +16,20 @@ class UserList(Resource):
     @namespace.marshal_list_with(user)
     def get(self):
         """
-            read() : Fetches documents from Firestore collection as JSON.
-            user : Return document that matches query ID.
+        Get all users.
         """
-        try:
-            all_users = [doc.to_dict() for doc in collection.stream()]
-            return jsonify(all_users), 200
-        except Exception as e:
-            return f"An Error Occured: {e}"
+        return user_controller.get_all()
 
     @namespace.doc('add_user')
     @namespace.expect(user)
     def post(self):
         """
-        Creates a new user.
+        Create a new user.
         """
         id = request.json.get('id')
-        collection.document(str(id)).set(request.json)
-        return None, 201
+        data = request.json
+        return user_controller.post(id, data)
+
 
 @namespace.route('/<id>')
 @namespace.param('id', 'The user identifier')
@@ -38,26 +39,21 @@ class User(Resource):
     @namespace.marshal_with(user)
     def get(self, id):
         """
-            get() : Fetches documents from Firestore collection as JSON.
-            user : Return document that matches query ID.
+        Get a user by id.
         """
-        try:
-            if id:
-                user = collection.document(id).get()
-                if user.exists:
-                    
-                    return jsonify(user.to_dict()), 200
-                else:
-                    raise FileNotFoundError 
-        except Exception as e:
-            return f"An Error Occured: {e}"
+        return user_controller.get_one(id)
     
     @namespace.doc('update_user')
     @namespace.expect(user)
-    def update(self):
+    def update(self, id):
         """
-        Creates a new user.
+        Update existing user.
         """
-        id = request.json.get('id')
-        collection.document(str(id)).update(request.json)
-        return None, 201
+        data = request.json
+        return user_controller.put(id, data)
+
+    def delete(self, id):
+        """
+        Delete existing user.
+        """
+        return user_controller.delete(id)
