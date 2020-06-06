@@ -1,6 +1,6 @@
 from flask import jsonify, request
 
-from app.api.controller import BaseController
+from app.api.base_controller import BaseController
 
 class Controller(BaseController):
 
@@ -22,6 +22,18 @@ class Controller(BaseController):
                     return doc.to_dict(), 200
                 else:
                     raise FileNotFoundError 
+        except Exception as e:
+            return f"An Error Occured: {e}"
+
+    def get_many_to_many(self, collection_with_id, collection, **kwargs):
+        try:
+            docs = []
+            columns = [column for column in kwargs]
+            doc = [doc.to_dict() for doc in collection_with_id.where(str(columns[0]), u'==', int(kwargs[columns[0]])).get()]
+            for d in doc:
+                docs.append(collection.document(str(d.get(columns[1]))).get().to_dict())
+            return docs, 200
+                
         except Exception as e:
             return f"An Error Occured: {e}"
 
