@@ -1,8 +1,7 @@
 
 from flask import Flask, Blueprint
-from flask_restplus import Api, Resource
+from flask_restplus import Api
 from werkzeug.middleware.proxy_fix import ProxyFix
-from firebase_admin import credentials, firestore, initialize_app
 
 from config import Config
 
@@ -12,7 +11,7 @@ application.wsgi_app = ProxyFix(application.wsgi_app)
 application.config.from_object(Config)
 
 # Initialize DB
-from app.database import db
+from app.models.database import db
  
 # Add API
 from app.api import user_namespace, election_namespace

@@ -1,6 +1,6 @@
 from flask_restplus import Namespace, Resource, fields
 
-from . import namespace
+from app.api.users import namespace
 
 user = namespace.model('User', {
     'id': fields.Integer(required=True, description='The user id'),

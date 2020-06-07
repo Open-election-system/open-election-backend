@@ -1,9 +1,9 @@
-from flask import jsonify, request
 from firebase_admin import firestore
 
-from app.api.base_controller import BaseController
+from app.models.db_controller.base_db_controller import BaseDatabaseController
 
-class Controller(BaseController):
+
+class DatabaseController(BaseDatabaseController):
 
     def __init__(self, collection):
         self.collection = collection
@@ -22,7 +22,7 @@ class Controller(BaseController):
                 if doc.exists:
                     return doc.to_dict(), 200
                 else:
-                    raise FileNotFoundError 
+                    raise FileNotFoundError
         except Exception as e:
             return f"An Error Occured: {e}"
 
@@ -30,20 +30,21 @@ class Controller(BaseController):
         try:
             docs = []
             columns = [column for column in kwargs]
-            doc = [doc.to_dict() for doc in collection_with_id.where(str(columns[0]), u'==', int(kwargs[columns[0]])).get()]
+            doc = [doc.to_dict() for doc in
+                   collection_with_id.where(str(columns[0]), u'==', int(kwargs[columns[0]])).get()]
             for d in doc:
                 docs.append(collection.document(str(d.get(columns[1]))).get().to_dict())
             return docs, 200
-                
+
         except Exception as e:
             return f"An Error Occured: {e}"
 
-    def post(self, data):
-        doc = [doc.to_dict() for doc in self.collection.order_by(u'id', direction=firestore.Query.DESCENDING).limit(1).get()]
+    def post(self, id, data):
+        doc = [doc.to_dict() for doc in
+               self.collection.order_by(u'id', direction=firestore.Query.DESCENDING).limit(1).get()]
         id = doc[0]['id']
         data['id'] = id + 1
         self.collection.document(str(id + 1)).set(data)
-        return None, 201
 
     def put(self, id, data):
         self.collection.document(str(id)).update(data)
