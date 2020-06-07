@@ -1,4 +1,4 @@
-from app.api.users import namespace, collection
+from app.models.users import collection
 from app.models.db_controller.db_controller import DatabaseController
 from app.controllers.entity_controller.entity_controller import EntityController
 
