@@ -1,8 +1,8 @@
-from flask import jsonify, request
+from flask import request
 
-from app.api.base_controller import BaseController
+from app.models.db_controller.base_db_controller import BaseDatabaseController
 
-class Controller(BaseController):
+class DatabaseController(BaseDatabaseController):
 
     def __init__(self, collection):
         self.collection = collection

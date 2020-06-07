@@ -1,16 +1,12 @@
-from flask import Flask, jsonify, request
-from flask_restplus import Namespace, Resource, fields
+from flask import request
+from flask_restplus import Resource
 
-from app.api.controller import Controller
+from app.api.users import namespace
+from app.models.users.models import user
+from app.controllers.users.users_controller import UsersController
 
-from app.api.users import namespace, collection
-from app.api.users.models import user
-from app.api.controller import Controller
+user_controller = UsersController()
 
-from app import db
-
-
-user_controller = Controller(collection)
 
 @namespace.route('')
 class UserList(Resource):
@@ -30,7 +26,7 @@ class UserList(Resource):
         """
         id = request.json.get('id')
         data = request.json
-        return user_controller.post(id, data)
+        return user_controller.create(id, data)
 
 
 @namespace.route('/<id>')
@@ -42,11 +38,11 @@ class User(Resource):
         """
         Get a user by id.
         """
-        vote_col = db.collection('vote')
-        voting_col = db.collection('votings')
-        votes = user_controller.get_many_to_many(vote_col, voting_col, userId=id, votingId=None)
-        return {'user': user_controller.get_one(id), 'votes':votes}
-    
+        # vote_col = db.collection('vote')
+        # voting_col = db.collection('votings')
+        # votes = user_controller.get_many_to_many(vote_col, voting_col, userId=id, votingId=None)
+        return user_controller.get_one(id)
+
     @namespace.doc('update_user')
     @namespace.expect(user)
     def update(self, id):
@@ -54,7 +50,7 @@ class User(Resource):
         Update existing user.
         """
         data = request.json
-        return user_controller.put(id, data)
+        return user_controller.update(id, data)
 
     def delete(self, id):
         """

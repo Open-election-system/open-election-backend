@@ -1,6 +1,6 @@
 import abc
 
-class BaseController:
+class BaseDatabaseController:
 
     __metaclass__ = abc.ABCMeta
 
