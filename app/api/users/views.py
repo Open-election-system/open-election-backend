@@ -19,14 +19,12 @@ class UserList(Resource):
         return user_controller.get_all()
 
     @namespace.doc('add_user')
-    @namespace.expect(user)
     def post(self):
         """
         Create a new user.
         """
-        id = request.json.get('id')
         data = request.json
-        return user_controller.create(id, data)
+        return user_controller.post(data)
 
 
 @namespace.route('/<id>')

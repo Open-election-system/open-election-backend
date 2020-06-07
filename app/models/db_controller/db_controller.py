@@ -1,6 +1,7 @@
-from flask import request
+from firebase_admin import firestore
 
 from app.models.db_controller.base_db_controller import BaseDatabaseController
+
 
 class DatabaseController(BaseDatabaseController):
 
@@ -21,7 +22,7 @@ class DatabaseController(BaseDatabaseController):
                 if doc.exists:
                     return doc.to_dict(), 200
                 else:
-                    raise FileNotFoundError 
+                    raise FileNotFoundError
         except Exception as e:
             return f"An Error Occured: {e}"
 
@@ -29,20 +30,24 @@ class DatabaseController(BaseDatabaseController):
         try:
             docs = []
             columns = [column for column in kwargs]
-            doc = [doc.to_dict() for doc in collection_with_id.where(str(columns[0]), u'==', int(kwargs[columns[0]])).get()]
+            doc = [doc.to_dict() for doc in
+                   collection_with_id.where(str(columns[0]), u'==', int(kwargs[columns[0]])).get()]
             for d in doc:
                 docs.append(collection.document(str(d.get(columns[1]))).get().to_dict())
             return docs, 200
-                
+
         except Exception as e:
             return f"An Error Occured: {e}"
 
     def post(self, id, data):
-        self.collection.document(str(id)).set(request.json)
-        return None, 201
+        doc = [doc.to_dict() for doc in
+               self.collection.order_by(u'id', direction=firestore.Query.DESCENDING).limit(1).get()]
+        id = doc[0]['id']
+        data['id'] = id + 1
+        self.collection.document(str(id + 1)).set(data)
 
     def put(self, id, data):
-        self.collection.document(str(id)).update(request.json)
+        self.collection.document(str(id)).update(data)
         return None, 201
 
     def delete(self, id):
