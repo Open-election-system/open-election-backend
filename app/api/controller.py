@@ -1,4 +1,5 @@
 from flask import jsonify, request
+from firebase_admin import firestore
 
 from app.api.base_controller import BaseController
 
@@ -37,12 +38,15 @@ class Controller(BaseController):
         except Exception as e:
             return f"An Error Occured: {e}"
 
-    def post(self, id, data):
-        self.collection.document(str(id)).set(request.json)
+    def post(self, data):
+        doc = [doc.to_dict() for doc in self.collection.order_by(u'id', direction=firestore.Query.DESCENDING).limit(1).get()]
+        id = doc[0]['id']
+        data['id'] = id + 1
+        self.collection.document(str(id + 1)).set(data)
         return None, 201
 
     def put(self, id, data):
-        self.collection.document(str(id)).update(request.json)
+        self.collection.document(str(id)).update(data)
         return None, 201
 
     def delete(self, id):
