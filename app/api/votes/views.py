@@ -2,8 +2,8 @@ from flask import request
 from flask_restplus import Resource
 
 from app.api.votes import namespace
-from app.models.votes.models import vote
-from app.controllers.votes.votes_controller import VotesController
+from app.api.votes.models import vote
+from app.api.votes.controllers import VotesController
 
 vote_controller = VotesController()
 

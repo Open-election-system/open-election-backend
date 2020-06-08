@@ -1,10 +1,10 @@
-from app.models.options import collection
-from app.models.db_controller.db_controller import DatabaseController
-from app.controllers.entity_controller.entity_controller import EntityController
+from app.api.options import collection
+from app.api.core.controllers.database import APIDatabaseController
+from app.api.core.controllers.entity import APIEntityController
 
 
-class OptionsController(EntityController):
-    __options_collection = DatabaseController(collection)
+class OptionsController(APIEntityController):
+    __options_collection = APIDatabaseController(collection)
 
     def get_all(self):
         return self.__options_collection.get_all()

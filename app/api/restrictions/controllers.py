@@ -1,10 +1,9 @@
-from app.models.restrictions import collection
-from app.models.db_controller.db_controller import DatabaseController
-from app.controllers.entity_controller.entity_controller import EntityController
+from app.api.restrictions import collection
+from app.api.core.controllers.database import APIDatabaseController
+from app.api.core.controllers.entity import APIEntityController
 
-
-class RestrictionsController(EntityController):
-    __restrictions_collection = DatabaseController(collection)
+class RestrictionsController(APIEntityController):
+    __restrictions_collection = APIDatabaseController(collection)
 
     def get_all(self):
         return self.__restrictions_collection.get_all()

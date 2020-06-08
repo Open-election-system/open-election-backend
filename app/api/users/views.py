@@ -2,8 +2,8 @@ from flask import request
 from flask_restplus import Resource
 
 from app.api.users import namespace
-from app.models.users.models import user
-from app.controllers.users.users_controller import UsersController
+from app.api.users.models import user
+from app.api.users.controllers import UsersController
 
 user_controller = UsersController()
 

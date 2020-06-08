@@ -1,10 +1,10 @@
-from app.models.users import collection
-from app.models.db_controller.db_controller import DatabaseController
-from app.controllers.entity_controller.entity_controller import EntityController
+from app.api.users import collection
+from app.api.core.controllers.database import APIDatabaseController
+from app.api.core.controllers.entity import APIEntityController
 
 
-class UsersController(EntityController):
-    __users_collection = DatabaseController(collection)
+class UsersController(APIEntityController):
+    __users_collection = APIDatabaseController(collection)
 
     def get_all(self):
         return self.__users_collection.get_all()

@@ -1,10 +1,10 @@
-from app.models.votes import collection
-from app.models.db_controller.db_controller import DatabaseController
-from app.controllers.entity_controller.entity_controller import EntityController
+from app.api.votes import collection
+from app.api.core.controllers.database import APIDatabaseController
+from app.api.core.controllers.entity import APIEntityController
 
 
-class VotesController(EntityController):
-    __votes_collection = DatabaseController(collection)
+class VotesController(APIEntityController):
+    __votes_collection = APIDatabaseController(collection)
 
     def get_all(self):
         return self.__votes_collection.get_all()
