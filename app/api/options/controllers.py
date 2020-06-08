@@ -3,7 +3,7 @@ from app.api.core.controllers.database import APIDatabaseController
 from app.api.core.controllers.entity import APIEntityController
 
 
-class OptionsController(APIEntityController):
+class OptionController(APIEntityController):
     __options_collection = APIDatabaseController(collection)
 
     def get_all(self):

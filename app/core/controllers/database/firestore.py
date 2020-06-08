@@ -1,6 +1,6 @@
 from firebase_admin import firestore
-from app.models.database import db
-from app.models.db_controller.base_db_controller import BaseDatabaseController
+from app.connectors.database import db
+from app.core.controllers.database.base import BaseDatabaseController
 
 
 class DatabaseController(BaseDatabaseController):
