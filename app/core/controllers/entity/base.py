@@ -1,6 +1,6 @@
 import abc
 
-class EntityController:
+class BaseEntityController:
 
     __metaclass__ = abc.ABCMeta
 

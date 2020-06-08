@@ -2,8 +2,8 @@ from flask import request
 from flask_restplus import Resource
 
 from app.api.elections import namespace
-from app.models.elections.models import election
-from app.controllers.elections.elections_controller import ElectionsController
+from app.api.elections.models import election
+from app.api.elections.controllers import ElectionsController
 
 election_controller = ElectionsController()
 

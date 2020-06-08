@@ -1,4 +1,7 @@
 from flask_restplus import Namespace, Resource, fields
 
-# Initialize namespace
-namespace = Namespace('options', description='Operations related to election options')
+from app.api.core import init_module
+
+MODULE_NAME = 'options'
+
+namespace, collection = init_module(MODULE_NAME)

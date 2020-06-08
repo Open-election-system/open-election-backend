@@ -2,8 +2,8 @@ from flask import request
 from flask_restplus import Resource
 
 from app.api.options import namespace
-from app.models.options.models import option
-from app.controllers.options.options_controller import OptionsController
+from app.api.options.models import option
+from app.api.options.controllers import OptionsController
 
 option_controller = OptionsController()
 

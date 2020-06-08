@@ -2,8 +2,8 @@ from flask import request
 from flask_restplus import Resource
 
 from app.api.restrictions import namespace
-from app.models.restrictions.models import restriction
-from app.controllers.restrictions.restrictions_controller import RestrictionsController
+from app.api.restrictions.models import restriction
+from app.api.restrictions.controllers import RestrictionsController
 
 restriction_controller = RestrictionsController()
 

@@ -1,10 +1,10 @@
-from app.models.elections import collection
-from app.models.db_controller.db_controller import DatabaseController
-from app.controllers.entity_controller.entity_controller import EntityController
+from app.api.elections import collection
+from app.api.core.controllers.database import APIDatabaseController
+from app.api.core.controllers.entity import APIEntityController
 
 
-class ElectionsController(EntityController):
-    __elections_collection = DatabaseController(collection)
+class ElectionsController(APIEntityController):
+    __elections_collection = APIDatabaseController(collection)
 
     def get_all(self):
         return self.__elections_collection.get_all()

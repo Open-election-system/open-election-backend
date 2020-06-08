@@ -1,4 +1,7 @@
 from flask_restplus import Namespace, Resource, fields
 
-# Initialize namespace
-namespace = Namespace('users', description='Operations related to users')
+from app.api.core import init_module
+
+MODULE_NAME = 'users'
+
+namespace, collection = init_module(MODULE_NAME)
