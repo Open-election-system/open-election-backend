@@ -3,7 +3,7 @@ from app.api.core.controllers.database import APIDatabaseController
 from app.api.core.controllers.entity import APIEntityController
 
 
-class ElectionsController(APIEntityController):
+class ElectionController(APIEntityController):
     __elections_collection = APIDatabaseController(collection)
 
     def get_all(self):
