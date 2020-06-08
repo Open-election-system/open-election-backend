@@ -24,7 +24,7 @@ class UserList(Resource):
         Create a new user.
         """
         data = request.json
-        return user_controller.post(data)
+        return user_controller.create(data)
 
 
 @namespace.route('/<id>')

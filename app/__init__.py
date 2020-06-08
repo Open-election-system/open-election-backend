@@ -14,7 +14,7 @@ application.config.from_object(Config)
 from app.models.database import db
  
 # Add API
-from app.api import user_namespace, election_namespace
+from app.api import user_namespace, election_namespace, restriction_namespace
 from app.auth import auth_namespace
 
 blueprint = Blueprint('api', __name__, url_prefix='/api/1')
@@ -27,5 +27,6 @@ api = Api(blueprint,
 # Add namespaces
 api.add_namespace(user_namespace)
 api.add_namespace(election_namespace)
+api.add_namespace(restriction_namespace)
 api.add_namespace(auth_namespace)
 application.register_blueprint(blueprint)

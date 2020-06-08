@@ -13,7 +13,7 @@ class UsersController(EntityController):
         return self.__users_collection.get_one(id)
 
     def create(self, data):
-        return self.__users_collection.post(id, data)
+        return self.__users_collection.post(data)
 
     def update(self, id, data):
         return self.__users_collection.put(id, data)
