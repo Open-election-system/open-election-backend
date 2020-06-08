@@ -1,5 +1,5 @@
 from firebase_admin import firestore
-
+from app.models.database import db
 from app.models.db_controller.base_db_controller import BaseDatabaseController
 
 
@@ -60,3 +60,19 @@ class DatabaseController(BaseDatabaseController):
                 return None, 201
         except Exception as e:
             return f"An Error Occured: {e}"
+
+    def batch_create(self, data_list):
+        doc = [doc.to_dict() for doc in
+               self.collection.order_by(u'id', direction=firestore.Query.DESCENDING).limit(1).get()]
+        id = 0
+        if doc:
+            id = doc[0]['id']
+
+        batch = db.batch()
+        for item in data_list:
+            item['id'] = id + 1
+            collection_ref = self.collection.document(str(id + 1))
+            batch.set(collection_ref, item)
+            id = id + 1
+        print(data_list, batch)
+        batch.commit()

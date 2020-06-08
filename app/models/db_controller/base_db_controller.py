@@ -23,3 +23,7 @@ class BaseDatabaseController:
     @abc.abstractmethod
     def delete(self, id):
         pass
+
+    @abc.abstractmethod
+    def batch_create(self, id):
+        pass
