@@ -62,6 +62,7 @@ instance/
 # virtualenv
 .venv/
 ENV/
+venv
 
 # Editors
 .idea/
