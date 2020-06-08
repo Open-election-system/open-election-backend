@@ -26,6 +26,14 @@ class OptionList(Resource):
         data = request.json
         return option_controller.create(data)
 
+    @namespace.doc('add_batch_option')
+    def post(self):
+        """
+        Create batch options.
+        """
+        data = request.json
+        return option_controller.batch_create(data)
+
 
 @namespace.route('/<id>')
 @namespace.param('id', 'The option identifier')

@@ -20,3 +20,6 @@ class OptionsController(EntityController):
 
     def delete(self, id):
         return self.__options_collection.delete(id)
+
+    def batch_create(self, id):
+        return self.__options_collection.batch_create(id)
