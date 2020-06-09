@@ -1,4 +1,6 @@
 from firebase_admin import firestore
+from copy import deepcopy
+
 from app.connectors.database import db
 from app.core.controllers.database.base import BaseDatabaseController
 
@@ -45,9 +47,9 @@ class DatabaseController(BaseDatabaseController):
         id = 0
         if doc:
             id = doc[0]['id']
-        print(id, data)
         data['id'] = id + 1
         self.collection.document(str(id + 1)).set(data)
+        return id+1
 
     def put(self, id, data):
         self.collection.document(str(id)).update(data)
@@ -76,3 +78,47 @@ class DatabaseController(BaseDatabaseController):
             id = id + 1
         print(data_list, batch)
         batch.commit()
+
+    def filter_equal_values(self, filter_dict):
+        """
+            The function for filtering a data collection.
+            
+            Input:
+            - filter_dict - a dict with the following structure:
+                {
+                    "filter_parameter": filter_value
+                }
+            Output:
+            - filtered_json - a dict with filtered values.
+            
+        """
+        filtered_documents = self.collection
+        for filter_parameter, filter_value in filter_dict.items():
+            filtered_documents = filtered_documents.where(filter_parameter, u'==', filter_value)
+        filtered_documents = filtered_documents.get()
+        filtered_json = { document.id: document.to_dict() for document in filtered_documents }
+        return filtered_json
+    
+    def filter_any_values(self, filter_list):
+        """
+            The function for filtering a data collection.
+            
+            Input:
+            - filter_list - a list with the following structure:
+                [
+                    {
+                        "parameter": filter parameter,
+                        "sign": a sign of the comparison: u"==", u">", etc. (unicode),
+                        "value": filter value
+                    }
+                ]
+            Output:
+            - filtered_json - a dict with filtered values.
+            
+        """
+        filtered_documents = self.collection
+        for filter_dict in filter_list:
+            filtered_documents = filtered_documents.where(filter_dict['parameter'], filter_dict['sign'], filter_dict['value'])
+        filtered_documents = filtered_documents.get()
+        filtered_json = { document.id: document.to_dict() for document in filtered_documents }
+        return filtered_json

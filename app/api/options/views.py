@@ -19,6 +19,7 @@ class OptionList(Resource):
         return option_controller.get_all()
 
     @namespace.doc('add_option')
+    @namespace.expect(option)
     def post(self):
         """
         Create a new option.

@@ -19,6 +19,7 @@ class RestrictionList(Resource):
         return restriction_controller.get_all()
 
     @namespace.doc('add restriction')
+    @namespace.expect(restriction)
     def post(self):
         """
         Create a new restriction.

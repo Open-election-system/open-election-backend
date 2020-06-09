@@ -49,4 +49,3 @@ db = initialize_db()
 api, blueprint = create_api(application)
 api = add_namespaces_to_api(api)
 application = register_blueprint(application, blueprint)
-    
