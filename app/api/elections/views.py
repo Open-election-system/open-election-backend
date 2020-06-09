@@ -19,6 +19,7 @@ class ElectionList(Resource):
         return election_controller.get_all()
 
     @namespace.doc('add election')
+    @namespace.expect(election)
     def post(self):
         """
         Create a new election.

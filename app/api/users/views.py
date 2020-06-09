@@ -2,8 +2,8 @@ from flask import request
 from flask_restplus import Resource
 
 from app.api.users import namespace
-from app.api.users.models import user
-from app.api.users.controllers import UsersController
+from app.api.users.models import user, user_response
+from app.api.users.controllers import UserController
 
 user_controller = UsersController()
 
@@ -19,6 +19,8 @@ class UserList(Resource):
         return user_controller.get_all()
 
     @namespace.doc('add_user')
+    @namespace.expect(user)
+    @namespace.response(200, 'Success', user_response)
     def post(self):
         """
         Create a new user.
