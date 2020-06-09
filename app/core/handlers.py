@@ -27,6 +27,7 @@ def file_not_found_handler(error):
 @application.errorhandler(Exception)
 def custom_exceptions_error_handler(error):
     if isinstance(error, CustomException):
+        print(error)
         return format_exception(error.description, error.code)
 
 
