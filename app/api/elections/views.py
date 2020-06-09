@@ -3,9 +3,9 @@ from flask_restplus import Resource
 
 from app.api.elections import namespace
 from app.api.elections.models import election
-from app.api.elections.controllers import ElectionsController
+from app.api.elections.controllers import ElectionController
 
-election_controller = ElectionsController()
+election_controller = ElectionController()
 
 
 @namespace.route('')

@@ -3,9 +3,9 @@ from flask_restplus import Resource
 
 from app.api.votes import namespace
 from app.api.votes.models import vote
-from app.api.votes.controllers import VotesController
+from app.api.votes.controllers import VoteController
 
-vote_controller = VotesController()
+vote_controller = VoteController()
 
 
 @namespace.route('')

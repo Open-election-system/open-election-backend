@@ -2,7 +2,7 @@ from app.api.restrictions import collection
 from app.api.core.controllers.database import APIDatabaseController
 from app.api.core.controllers.entity import APIEntityController
 
-class RestrictionsController(APIEntityController):
+class RestrictionController(APIEntityController):
     __restrictions_collection = APIDatabaseController(collection)
 
     def get_all(self):

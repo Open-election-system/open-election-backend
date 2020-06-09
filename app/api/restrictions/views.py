@@ -3,9 +3,9 @@ from flask_restplus import Resource
 
 from app.api.restrictions import namespace
 from app.api.restrictions.models import restriction
-from app.api.restrictions.controllers import RestrictionsController
+from app.api.restrictions.controllers import RestrictionController
 
-restriction_controller = RestrictionsController()
+restriction_controller = RestrictionController()
 
 
 @namespace.route('')

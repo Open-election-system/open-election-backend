@@ -5,8 +5,7 @@ from app.api.users import namespace
 from app.api.users.models import user, user_response
 from app.api.users.controllers import UserController
 
-user_controller = UsersController()
-
+user_controller = UserController()
 
 @namespace.route('')
 class UserList(Resource):
