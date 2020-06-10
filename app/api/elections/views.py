@@ -6,6 +6,7 @@ from app.api.elections.models import election
 from app.api.elections.controllers import ElectionController
 
 election_controller = ElectionController()
+container = {}
 
 
 @namespace.route('')
@@ -16,6 +17,8 @@ class ElectionList(Resource):
         """
         Get all elections.
         """
+        # user_id = request.headers['user-id']
+        # return container.elections_facade.get_elections(user_id)
         return election_controller.get_all()
 
     @namespace.doc('add election')
@@ -33,23 +36,38 @@ class ElectionList(Resource):
 @namespace.response(404, 'election not found')
 class Election(Resource):
     @namespace.doc('get_election')
-    def get(self, id):
+    def get(self, election_id):
         """
         Get a election by id.
         """
-        return election_controller.get_one(id)
+        # user_id = request.headers['user-id']
+        # return container.elections_facade.get_election(election_id, user_id)
+        return election_controller.get_one(election_id)
 
     @namespace.doc('update_election')
     @namespace.expect(election)
-    def update(self, id):
+    def update(self, election_id):
         """
         Update existing election.
         """
         data = request.json
-        return election_controller.update(id, data)
+        # return container.elections_facade.create_election(data)
+        return election_controller.update(election_id, data)
 
-    def delete(self, id):
+    def delete(self, election_id):
         """
         Delete existing election.
         """
-        return election_controller.delete(id)
+        return election_controller.delete(election_id)
+
+
+@namespace.route('/stats/<id>')
+@namespace.param('id', 'The election identifier')
+class ElectionStats(Resource):
+    @namespace.doc('get_election')
+    def get(self, election_id):
+        """
+        Get a election by id.
+        """
+        # user_id = request.headers['user-id']
+        # return container.elections_facade.get_election(election_id)

@@ -16,7 +16,7 @@ class ElectionsBuilder:
 
     @staticmethod
     def __build_election(election):
-        return container.election_service.create(election)
+        return container.elections_service.create(election)
 
     @staticmethod
     def __build_restrictions(restrictions):
