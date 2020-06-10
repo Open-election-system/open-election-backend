@@ -41,7 +41,12 @@ class DatabaseController(BaseDatabaseController):
         except Exception as e:
             return f"An Error Occured: {e}"
 
-    def post(self, data):
+    def post(self, data, **kwargs):
+        if 'id' in kwargs:
+            data['id'] = kwargs.get('id')
+            self.collection.document(str(kwargs.get('id'))).set(data)
+            return data['id']
+            
         doc = [doc.to_dict() for doc in
                self.collection.order_by(u'id', direction=firestore.Query.DESCENDING).limit(1).get()]
         id = 0
