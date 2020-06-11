@@ -16,7 +16,7 @@ class DatabaseController(BaseDatabaseController):
     def get_all(self):
         try:
             all_docs = [doc.to_dict() for doc in self.collection.stream()]
-            return all_docs, 200
+            return all_docs
         except Exception as e:
             return f"An Error Occured: {e}"
 
@@ -62,7 +62,8 @@ class DatabaseController(BaseDatabaseController):
         try:
             if id:
                 self.collection.document(str(id)).delete()
-                return None, 201
+                
+                return 'Deleted', 201
         except Exception as e:
             return f"An Error Occured: {e}"
 
