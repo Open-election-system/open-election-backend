@@ -19,16 +19,16 @@ class AuthService(AuthEntityService):
         # pick email from the request json
         email_filter = {cls.EMAIL: data[cls.EMAIL]}
         # Check if users with the same email already exist:
-        query_documents = self.__user_collection.filter_equal_values(email_filter)
+        query_documents = self.__user_collection.get_by_equal_params(email_filter)
         if len(query_documents) > 0: raise EmailInUseException()
         return self.__user_collection.post(data)
     
     def login(self, data):
         cls = self.__class__
-        query_documents = self.__user_collection.filter_equal_values(data)
+        query_documents = self.__user_collection.get_by_equal_params(data)
         
         # Another way to query data is:
-        # query_documents = self.__auth_collection.filter_any_values([{
+        # query_documents = self.__auth_collection.get_by_any_params([{
         #     "parameter": cls.EMAIL,
         #     "sign": u"==",
         #     "value": "string"

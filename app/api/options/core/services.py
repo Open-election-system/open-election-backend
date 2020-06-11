@@ -14,6 +14,10 @@ class OptionService(APIEntityServiceMixin):
         """
         return APIDatabaseController(collection)
 
+    @property
+    def __collection(self):
+        return self._EntityServiceMixin__collection
+    
     def get_by_election(self, election_id):
         pass
         # return self.__options_collection.get_one(id)

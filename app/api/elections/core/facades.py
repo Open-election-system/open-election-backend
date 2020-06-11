@@ -1,19 +1,19 @@
 from app.api.core.facades import APIBaseFacade
 
-container = {}
-
-
 class ElectionFacade(APIBaseFacade):
     
     @classmethod
     def get_elections(cls, user_id):
+        from app.api import container
+        
         elections = []
-        user_info = container.users_facade.get_user_info(user_id)
-        available_restrictions = container.restrictions_service.get_with_params(user_info)
-        for restriction in available_restrictions:
-            election = container.elections_service.get_by_restrictions(restriction.id)
-            user_votes_count = container.vote_service.count(election.id, user_id)
-            elections.append({'election': election, 'restrictions': restriction, 'votes_count': user_votes_count})
+        user_info = container.facades.users.get_user_info(user_id)
+        print(user_info)
+        # available_restrictions = container.services.restrictions().get_with_params(user_info)
+        # for restriction in available_restrictions:
+        #     election = container.services.elections().get_by_restrictions(restriction.id)
+        #     user_votes_count = container.services.votings().count(election.id, user_id)
+        #     elections.append({'election': election, 'restrictions': restriction, 'votes_count': user_votes_count})
         return elections
 
     @classmethod

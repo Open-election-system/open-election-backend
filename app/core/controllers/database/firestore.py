@@ -82,7 +82,7 @@ class DatabaseController(BaseDatabaseController):
         print(data_list, batch)
         batch.commit()
 
-    def filter_equal_values(self, filter_dict):
+    def get_by_equal_params(self, filter_dict):
         """
             The function for filtering a data collection.
             
@@ -99,10 +99,10 @@ class DatabaseController(BaseDatabaseController):
         for filter_parameter, filter_value in filter_dict.items():
             filtered_documents = filtered_documents.where(filter_parameter, u'==', filter_value)
         filtered_documents = filtered_documents.get()
-        filtered_json = { document.id: document.to_dict() for document in filtered_documents }
+        filtered_json = [document.to_dict() for document in filtered_documents]
         return filtered_json
     
-    def filter_any_values(self, filter_list):
+    def get_by_any_params(self, filter_list):
         """
             The function for filtering a data collection.
             
@@ -123,5 +123,5 @@ class DatabaseController(BaseDatabaseController):
         for filter_dict in filter_list:
             filtered_documents = filtered_documents.where(filter_dict['parameter'], filter_dict['sign'], filter_dict['value'])
         filtered_documents = filtered_documents.get()
-        filtered_json = { document.id: document.to_dict() for document in filtered_documents }
+        filtered_json = [document.to_dict() for document in filtered_documents]
         return filtered_json

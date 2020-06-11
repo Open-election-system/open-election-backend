@@ -9,4 +9,11 @@ class ElectionService(APIEntityServiceMixin):
     
     @property
     def _EntityServiceMixin__collection(self):
+        """
+            Warning: don't change a name of the function.
+        """
         return APIDatabaseController(collection)
+
+    @property
+    def __collection(self):
+        return self._EntityServiceMixin__collection

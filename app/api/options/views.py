@@ -52,7 +52,7 @@ class Option(Resource):
 
     @namespace.doc('update_option')
     @namespace.expect(option)
-    def update(self, id):
+    def put(self, id):
         """
         Update existing option.
         """

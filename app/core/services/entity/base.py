@@ -37,9 +37,9 @@ class BaseEntityService:
         pass
 
     @abc.abstractmethod
-    def filter_equal_values(self, id, filter_dict):
-        return self.__collection.filter_equal_values(filter_dict)
+    def get_by_equal_params(self, id, filter_dict):
+        return self.__collection.get_by_equal_params(filter_dict)
 
     @abc.abstractmethod
-    def filter_any_values(self, filter_list):
-        return self.__collection.filter_any_values(filter_list)
+    def get_by_any_params(self, filter_list):
+        return self.__collection.get_by_any_params(filter_list)

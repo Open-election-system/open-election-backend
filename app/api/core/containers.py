@@ -1,6 +1,8 @@
 
 from app.api.core.services.entity import APIEntityServiceMixin
 from app.api.core.builders import APIBaseBuilder
+from app.api.core.facades import APIBaseFacade
+from app.core.utils import setdefaultattr
 
 
 class EntityContainer:
@@ -11,7 +13,9 @@ class EntityContainer:
         self.votings = voting
         self.restrictions = restriction
         self.options = option
-
+    
+    def setdefaultattr(self, name, value):
+        return setdefaultattr(self, name, value)
 
 class IoCServiceContainer(EntityContainer):
 
@@ -26,8 +30,15 @@ class IoCBuiderContainer(EntityContainer):
         super(IoCBuiderContainer, self).__init__(election, user)
 
 
+class IoCFacadeContainer(EntityContainer):
+
+    def __init__(self, election: APIBaseBuilder, user: APIBaseBuilder):
+        super(IoCFacadeContainer, self).__init__(election, user)
+
+
 class IoCContainer:
 
-    def __init__(self, service_container: IoCServiceContainer, builder_container: IoCBuiderContainer, facade_container=None):
+    def __init__(self, service_container: IoCServiceContainer, builder_container: IoCBuiderContainer, facade_container: APIBaseFacade):
         self.services = service_container
         self.builders = builder_container
+        self.facades = facade_container

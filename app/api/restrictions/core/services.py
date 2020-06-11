@@ -10,6 +10,20 @@ class RestrictionService(APIEntityServiceMixin):
     def _EntityServiceMixin__collection(self):
         return APIDatabaseController(collection)
 
+    @property
+    def __collection(self):
+        return self._EntityServiceMixin__collection
+    
     def get_with_params(self, params):  #user info
+        """
+            default_restrictions = {
+                'ageFrom': 18,
+                'ageTo': None,
+                'votes_number': 1,
+                'reatract': False,
+                'start': '',  # now
+                'end': '',  # now + day
+                'organization': None,
+            }
+        """
         pass
-        # return self.__restrictions_collection.delete(id)

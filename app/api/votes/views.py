@@ -44,7 +44,7 @@ class Voting(Resource):
 
     @namespace.doc('update_vote')
     @namespace.expect(vote)
-    def update(self, id):
+    def put(self, id):
         """
         Update existing vote.
         """

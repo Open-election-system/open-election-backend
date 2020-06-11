@@ -2,21 +2,30 @@ from flask import request
 from flask_restplus import Resource
 
 from app.api.elections import namespace
-from app.api.elections.models import election
+from app.api.elections.models import election, election_response
+
+parser = namespace.parser()
+parser.add_argument('user-id', help='user id', required=False, location='headers')
 
 @namespace.route('')
+@namespace.expect(parser)
 class ElectionList(Resource):
+    
     @namespace.doc('list elections')
-    @namespace.marshal_list_with(election)
+    @namespace.marshal_list_with(election_response)
+    @namespace.response(200, 'Success', election_response)
     def get(self):
         """
         Get all elections.
         """
-        # user_id = request.headers['user-id']
-        # return container.elections_facade.get_elections(user_id)
         from app.api import container
-        return container.services.elections().get_all()
-
+        
+        user_id = request.headers['user-id'] if 'user-id' in request.headers else None
+        if user_id is not None:
+            return container.facades.elections.get_elections(user_id)
+        else:
+            return container.services.elections().get_all()
+    
     @namespace.doc('add election')
     @namespace.expect(election)
     def post(self):
@@ -29,13 +38,16 @@ class ElectionList(Resource):
 
 
 @namespace.route('/<id>')
+@namespace.expect(parser)
 @namespace.param('id', 'The election identifier')
 @namespace.response(404, 'election not found')
 class Election(Resource):
+    
     @namespace.doc('get_election')
+    @namespace.response(200, 'Success', election_response)
     def get(self, election_id):
         """
-        Get a election by id.
+        Get an election by id.
         """
         # user_id = request.headers['user-id']
         # return container.elections_facade.get_election(election_id, user_id)
@@ -44,7 +56,7 @@ class Election(Resource):
 
     @namespace.doc('update_election')
     @namespace.expect(election)
-    def update(self, election_id):
+    def put(self, election_id):
         """
         Update existing election.
         """
@@ -62,6 +74,7 @@ class Election(Resource):
 
 
 @namespace.route('/stats/<id>')
+@namespace.expect(parser)
 @namespace.param('id', 'The election identifier')
 class ElectionStats(Resource):
     @namespace.doc('get_election')

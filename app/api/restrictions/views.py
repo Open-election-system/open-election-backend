@@ -42,7 +42,7 @@ class Restriction(Resource):
 
     @namespace.doc('update_restriction')
     @namespace.expect(restriction)
-    def update(self, id):
+    def put(self, id):
         """
         Update existing restriction.
         """

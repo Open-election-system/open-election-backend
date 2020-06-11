@@ -28,10 +28,11 @@ def create_api(application):
     return api, blueprint
 
 def add_namespaces_to_api(api):
-    from app.api import user_namespace, election_namespace, restriction_namespace, option_namespace, vote_namespace
+    from app.api import user_namespace, election_namespace, restriction_namespace, option_namespace, vote_namespace, user_info_namespace
     from app.auth import auth_namespace
     # Add namespaces
     api.add_namespace(user_namespace)
+    api.add_namespace(user_info_namespace)
     api.add_namespace(election_namespace)
     api.add_namespace(restriction_namespace)
     api.add_namespace(option_namespace)
