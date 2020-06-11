@@ -1,9 +1,13 @@
 import abc
 
-class BaseEntityController:
+class BaseEntityService:
 
     __metaclass__ = abc.ABCMeta
 
+    @property
+    def __collection(self):
+        raise NotImplementedError
+    
     @abc.abstractmethod
     def get_all(self):
         pass

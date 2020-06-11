@@ -3,10 +3,9 @@ from flask_restplus import Resource
 
 from app.api.elections import namespace
 from app.api.elections.models import election
-from app.api.elections.controllers import ElectionController
+from app.api.elections.services import ElectionService
 
-election_controller = ElectionController()
-container = {}
+election_service = ElectionService()
 
 
 @namespace.route('')
@@ -17,9 +16,7 @@ class ElectionList(Resource):
         """
         Get all elections.
         """
-        # user_id = request.headers['user-id']
-        # return container.elections_facade.get_elections(user_id)
-        return election_controller.get_all()
+        return election_service.get_all()
 
     @namespace.doc('add election')
     @namespace.expect(election)
@@ -28,7 +25,7 @@ class ElectionList(Resource):
         Create a new election.
         """
         data = request.json
-        return election_controller.create(data)
+        return election_service.create(data)
 
 
 @namespace.route('/<id>')
@@ -36,38 +33,23 @@ class ElectionList(Resource):
 @namespace.response(404, 'election not found')
 class Election(Resource):
     @namespace.doc('get_election')
-    def get(self, election_id):
+    def get(self, id):
         """
         Get a election by id.
         """
-        # user_id = request.headers['user-id']
-        # return container.elections_facade.get_election(election_id, user_id)
-        return election_controller.get_one(election_id)
+        return election_service.get_one(id)
 
     @namespace.doc('update_election')
     @namespace.expect(election)
-    def update(self, election_id):
+    def update(self, id):
         """
         Update existing election.
         """
         data = request.json
-        # return container.elections_facade.create_election(data)
-        return election_controller.update(election_id, data)
+        return election_service.update(id, data)
 
-    def delete(self, election_id):
+    def delete(self, id):
         """
         Delete existing election.
         """
-        return election_controller.delete(election_id)
-
-
-@namespace.route('/stats/<id>')
-@namespace.param('id', 'The election identifier')
-class ElectionStats(Resource):
-    @namespace.doc('get_election')
-    def get(self, election_id):
-        """
-        Get a election by id.
-        """
-        # user_id = request.headers['user-id']
-        # return container.elections_facade.get_election(election_id)
+        return election_service.delete(id)

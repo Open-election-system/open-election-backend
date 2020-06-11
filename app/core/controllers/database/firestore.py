@@ -7,8 +7,11 @@ from app.core.controllers.database.base import BaseDatabaseController
 
 class DatabaseController(BaseDatabaseController):
 
-    def __init__(self, collection):
-        self.collection = collection
+    def __init__(self, collection, name=None):
+        if name is not None:
+            self.collection = db.collection(name)
+        else:
+            self.collection = collection
 
     def get_all(self):
         try:

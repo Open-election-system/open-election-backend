@@ -1,6 +1,7 @@
 
 from flask import Flask, Blueprint
 from flask_restplus import Api
+from flask_cors import CORS, cross_origin
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 def create_app(config_filename):
@@ -8,6 +9,7 @@ def create_app(config_filename):
     application = Flask(__name__)
     application.wsgi_app = ProxyFix(application.wsgi_app)
     application.config.from_object(Config)
+    cors = CORS(application)
     return application
 
 def initialize_db():
