@@ -1,7 +1,10 @@
+from app.api.core.facades import APIBaseFacade
+
 container = {}
 
 
-class ElectionsFacade:
+class ElectionFacade(APIBaseFacade):
+    
     @staticmethod
     def get_elections(user_id):
         elections = []

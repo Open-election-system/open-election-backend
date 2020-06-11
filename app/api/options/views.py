@@ -3,9 +3,9 @@ from flask_restplus import Resource
 
 from app.api.options import namespace
 from app.api.options.models import option
-from app.api.options.services import OptionService
+# from app.api.options.services import OptionService
 
-option_service = OptionService()
+# option_service = OptionService()
 
 
 @namespace.route('')
@@ -16,7 +16,8 @@ class OptionList(Resource):
         """
         Get all options.
         """
-        return option_service.get_all()
+        from app.api import container
+        return container.services.options().get_all()
 
     @namespace.doc('add_option')
     @namespace.expect(option)
@@ -25,15 +26,16 @@ class OptionList(Resource):
         Create a new option.
         """
         data = request.json
-        return option_service.create(data)
+        from app.api import container
+        return container.services.options().create(data)
 
     @namespace.doc('add_batch_option')
     def post(self):
         """
         Create batch options.
         """
-        data = request.json
-        return option_service.batch_create(data)
+        from app.api import container
+        return container.services.options().batch_create(data)
 
 
 @namespace.route('/<id>')
@@ -48,7 +50,8 @@ class Option(Resource):
         # vote_col = db.collection('vote')
         # voting_col = db.collection('votings')
         # votes = option_service.get_many_to_many(vote_col, voting_col, optionId=id, votingId=None)
-        return option_service.get_one(id)
+        from app.api import container
+        return container.services.options().get_one(id)
 
     @namespace.doc('update_option')
     @namespace.expect(option)
@@ -57,10 +60,12 @@ class Option(Resource):
         Update existing option.
         """
         data = request.json
-        return option_service.update(id, data)
+        from app.api import container
+        return container.services.options().update(id, data)
 
     def delete(self, id):
         """
         Delete existing option.
         """
-        return option_service.delete(id)
+        from app.api import container
+        return container.services.options().delete(id)

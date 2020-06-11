@@ -3,9 +3,6 @@ from flask_restplus import Resource
 
 from app.api.restrictions import namespace
 from app.api.restrictions.models import restriction
-from app.api.restrictions.services import RestrictionService
-
-restriction_service = RestrictionService()
 
 
 @namespace.route('')
@@ -16,7 +13,8 @@ class RestrictionList(Resource):
         """
         Get all restrictions.
         """
-        return restriction_service.get_all()
+        from app.api import container
+        return container.services.restrictions().get_all()
 
     @namespace.doc('add restriction')
     @namespace.expect(restriction)
@@ -26,7 +24,8 @@ class RestrictionList(Resource):
         """
         data = request.json
         print(request, request.json, data)
-        return restriction_service.create(data)
+        from app.api import container
+        return container.services.restrictions().create(data)
 
 
 @namespace.route('/<id>')
@@ -38,7 +37,8 @@ class Restriction(Resource):
         """
         Get a restriction by id.
         """
-        return restriction_service.get_one(id)
+        from app.api import container
+        return container.services.restrictions().get_one(id)
 
     @namespace.doc('update_restriction')
     @namespace.expect(restriction)
@@ -47,10 +47,12 @@ class Restriction(Resource):
         Update existing restriction.
         """
         data = request.json
-        return restriction_service.update(id, data)
+        from app.api import container
+        return container.services.restrictions().update(id, data)
 
     def delete(self, id):
         """
         Delete existing restriction.
         """
-        return restriction_service.delete(id)
+        from app.api import container
+        return container.services.restrictions().delete(id)

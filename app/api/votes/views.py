@@ -3,9 +3,7 @@ from flask_restplus import Resource
 
 from app.api.votes import namespace
 from app.api.votes.models import vote
-from app.api.votes.services import VotingService
 
-vote_service = VotingService()
 
 
 @namespace.route('')
@@ -16,7 +14,8 @@ class VotingList(Resource):
         """
         Get all votes.
         """
-        return vote_service.get_all()
+        from app.api import container
+        return container.services.votings().get_all()
 
     @namespace.doc('add_vote')
     def post(self):
@@ -24,7 +23,8 @@ class VotingList(Resource):
         Create a new vote.
         """
         data = request.json
-        return vote_service.create(data)
+        from app.api import container
+        return container.services.votings().create(data)
 
 
 @namespace.route('/<id>')
@@ -39,7 +39,8 @@ class Voting(Resource):
         # vote_col = db.collection('vote')
         # voting_col = db.collection('votings')
         # votes = vote_service.get_many_to_many(vote_col, voting_col, voteId=id, votingId=None)
-        return vote_service.get_one(id)
+        from app.api import container
+        return container.services.votings().get_one(id)
 
     @namespace.doc('update_vote')
     @namespace.expect(vote)
@@ -48,10 +49,12 @@ class Voting(Resource):
         Update existing vote.
         """
         data = request.json
-        return vote_service.update(id, data)
+        from app.api import container
+        return container.services.votings().update(id, data)
 
     def delete(self, id):
         """
         Delete existing vote.
         """
-        return vote_service.delete(id)
+        from app.api import container
+        return container.services.votings().delete(id)
