@@ -3,20 +3,20 @@ from flask_restplus import Resource
 
 from app.api.votes import namespace
 from app.api.votes.models import vote
-from app.api.votes.controllers import VoteController
+from app.api.votes.services import VotingService
 
-vote_controller = VoteController()
+vote_service = VotingService()
 
 
 @namespace.route('')
-class VoteList(Resource):
+class VotingList(Resource):
     @namespace.doc('list_votes')
     @namespace.marshal_list_with(vote)
     def get(self):
         """
         Get all votes.
         """
-        return vote_controller.get_all()
+        return vote_service.get_all()
 
     @namespace.doc('add_vote')
     def post(self):
@@ -24,13 +24,13 @@ class VoteList(Resource):
         Create a new vote.
         """
         data = request.json
-        return vote_controller.create(data)
+        return vote_service.create(data)
 
 
 @namespace.route('/<id>')
 @namespace.param('id', 'The vote identifier')
-@namespace.response(404, 'Vote not found')
-class Vote(Resource):
+@namespace.response(404, 'Voting not found')
+class Voting(Resource):
     @namespace.doc('get_vote')
     def get(self, id):
         """
@@ -38,8 +38,8 @@ class Vote(Resource):
         """
         # vote_col = db.collection('vote')
         # voting_col = db.collection('votings')
-        # votes = vote_controller.get_many_to_many(vote_col, voting_col, voteId=id, votingId=None)
-        return vote_controller.get_one(id)
+        # votes = vote_service.get_many_to_many(vote_col, voting_col, voteId=id, votingId=None)
+        return vote_service.get_one(id)
 
     @namespace.doc('update_vote')
     @namespace.expect(vote)
@@ -48,10 +48,10 @@ class Vote(Resource):
         Update existing vote.
         """
         data = request.json
-        return vote_controller.update(id, data)
+        return vote_service.update(id, data)
 
     def delete(self, id):
         """
         Delete existing vote.
         """
-        return vote_controller.delete(id)
+        return vote_service.delete(id)
