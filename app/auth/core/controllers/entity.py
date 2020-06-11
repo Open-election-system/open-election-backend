@@ -1,7 +1,7 @@
 import abc
-from app.core.services.entity.base import BaseEntityService
+from app.core.controllers.entity.base import BaseEntityController
 
-class AuthEntityService(BaseEntityService):
+class AuthEntityController(BaseEntityController):
 
     __metaclass__ = abc.ABCMeta
 
