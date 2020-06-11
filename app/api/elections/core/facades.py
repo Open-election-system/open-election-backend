@@ -62,6 +62,7 @@ class ElectionFacade(APIBaseFacade):
 
     @classmethod
     def create_election(cls, data):
+        from app.api import container
         return container.builders.elections.build(data)
 
 

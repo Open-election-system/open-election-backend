@@ -13,9 +13,8 @@ class ElectionAgregator(BaseAggregator):
     def __init__(self):
         from app.api import container
 
-        self.report = ElectionReportAgregationObject()
+        self.report = deepcopy(ElectionReportAgregationObject())
         self.data = container.services.elections().get_all()
-        # print(self.data)
         super(ElectionAgregator, self).__init__(self.data)
         
     @property
@@ -41,6 +40,6 @@ class ElectionIterator(BaseIterator):
         from app.api import container
         
         self.election_id = self.item['id']
-        election = deepcopy(container.facades.options.get_option_stats_by_election_id(self.election_id))
-        print(self.election_id, election)
+        election = container.facades.options.get_option_stats_by_election_id(self.election_id)
+        # print(self.election_id, election)
         self.container.report.elections.append(election)

@@ -11,6 +11,7 @@ class OptionReportAgregationObject:
         
 class OptionAgregationObject:
     
-    def __init__(self, option_id, vote_number):
+    def __init__(self, option_id, option_name, vote_number):
         self.option_id = option_id
+        self.option_name = option_name
         self.vote_number = vote_number 

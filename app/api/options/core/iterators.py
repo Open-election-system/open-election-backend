@@ -49,7 +49,7 @@ class OptionIterator(BaseIterator):
         option_votes = search_option['vote_number'] if len(search_option)>0 else 0
         # print(self.option_id, self.votes, option_votes)
         option_votes += len(self.votes)
-        option_agregator = OptionAgregationObject(self.option_id, option_votes)
+        option_agregator = OptionAgregationObject(self.option_id, self.item['name'], option_votes)
         option_agregator_serializer = Serializer.serialize(option_agregator)
         # print(option_agregator_serializer)
         self.container.report.options.append(option_agregator_serializer)
