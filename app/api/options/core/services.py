@@ -19,4 +19,4 @@ class OptionService(APIEntityServiceMixin):
         return self._EntityServiceMixin__colection
 
     def get_by_election(self, election_id):
-        return self.__options_collection.get_by_equal_params({'election_id': id})
+        return self.__collection.get_by_equal_params({'election_id': int(election_id)})

@@ -39,40 +39,40 @@ class ElectionList(Resource):
         return container.builders.elections.build(data)
 
 
-@namespace.route('/<id>')
+@namespace.route('/<int:id>')
 @namespace.expect(parser)
-@namespace.param('election_id', 'The election identifier')
+@namespace.param('id', 'The election identifier')
 @namespace.response(404, 'election not found')
 class Election(Resource):
     
     @namespace.doc('get_election')
     @namespace.response(200, 'Success', election_response)
-    def get(self, election_id):
+    def get(self, id):
         """
         Get an election by id.
         """
         user_id = request.headers['user-id']
-        # from app.api import container
-        return container.facades.elections.get_election(election_id, user_id)
-        # return container.services.elections().get_one(election_id)
+        from app.api import container
+        return container.facades.elections.get_election(id, user_id)
+        # return container.services.elections().get_one(id)
 
     @namespace.doc('update_election')
     @namespace.expect(election)
-    def put(self, election_id):
+    def put(self, id):
         """
         Update existing election.
         """
         data = request.json
         # return container.facades.elections.create_election(data)
         from app.api import container
-        return container.services.elections().update(election_id, data)
+        return container.services.elections().update(id, data)
 
-    def delete(self, election_id):
+    def delete(self, id):
         """
         Delete existing election.
         """
         from app.api import container
-        return container.services.elections().delete(election_id)
+        return container.services.elections().delete(id)
 
 
 @namespace.route('/stats/<id>')
@@ -80,10 +80,10 @@ class Election(Resource):
 @namespace.param('id', 'The election identifier')
 class ElectionStats(Resource):
     @namespace.doc('get_election')
-    def get(self, election_id):
+    def get(self, id):
         """
         Get a election by id.
         """
         # user_id = request.headers['user-id']
         from app.api import container
-        # return container.facades.elections.get_election(election_id)
+        # return container.facades.elections.get_election(id)
