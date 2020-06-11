@@ -13,7 +13,7 @@ def create_container(container, service_container, buider_container, facade_cont
     """
         Creating an IoC container.
         Different access:
-        - to services: container.services.resrictions().get_with_params(user_info)
+        - to services: container.services.resrictions().get_by_params(user_info)
         - other: container.facades.users.get_user_info(user_id)
     """
     from app.api.elections import ElectionService, ElectionBuilder, ElectionFacade

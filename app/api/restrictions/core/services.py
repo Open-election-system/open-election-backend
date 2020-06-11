@@ -18,7 +18,7 @@ class RestrictionService(APIEntityServiceMixin):
     def __collection(self):
         return self._EntityServiceMixin__collection
 
-    def get_with_params(self, params):  # user info
+    def get_by_params(self, params):  # user info
         """
             default_restrictions = {
                 'age_from': 18,

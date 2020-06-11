@@ -2,18 +2,19 @@ from flask import request
 from flask_restplus import Resource
 
 from app.api.elections import namespace
-from app.api.elections.models import election, election_response, election_full_model
+from app.api.elections.models import election, election_response, election_full_model, election_full_response_model
 
 parser = namespace.parser()
 parser.add_argument('user-id', help='user id', required=False, location='headers')
 
 @namespace.route('')
-@namespace.expect(parser)
+
 class ElectionList(Resource):
     
     @namespace.doc('list elections')
-    @namespace.marshal_list_with(election_full_model)
-    @namespace.response(200, 'Success', election_full_model)
+    @namespace.expect(parser)
+    @namespace.marshal_list_with(election_full_response_model)
+    @namespace.response(200, 'Success', election_full_response_model)
     def get(self):
         """
         Get all elections.
@@ -27,19 +28,20 @@ class ElectionList(Resource):
             return container.services.elections().get_all()
     
     @namespace.doc('add ele ction')
-    @namespace.expect(election)
+    @namespace.expect(election_full_model)
     def post(self):
         """
         Create a new election.
         """
         data = request.json
         from app.api import container
-        return container.services.elections().create(data)
+        
+        return container.builders.elections.build(data)
 
 
 @namespace.route('/<id>')
 @namespace.expect(parser)
-@namespace.param('id', 'The election identifier')
+@namespace.param('election_id', 'The election identifier')
 @namespace.response(404, 'election not found')
 class Election(Resource):
     
@@ -49,10 +51,10 @@ class Election(Resource):
         """
         Get an election by id.
         """
-        # user_id = request.headers['user-id']
-        # return container.elections_facade.get_election(election_id, user_id)
-        from app.api import container
-        return container.services.elections().get_one(election_id)
+        user_id = request.headers['user-id']
+        # from app.api import container
+        return container.facades.elections.get_election(election_id, user_id)
+        # return container.services.elections().get_one(election_id)
 
     @namespace.doc('update_election')
     @namespace.expect(election)
@@ -61,7 +63,7 @@ class Election(Resource):
         Update existing election.
         """
         data = request.json
-        # return container.elections_facade.create_election(data)
+        # return container.facades.elections.create_election(data)
         from app.api import container
         return container.services.elections().update(election_id, data)
 
@@ -84,4 +86,4 @@ class ElectionStats(Resource):
         """
         # user_id = request.headers['user-id']
         from app.api import container
-        # return container.elections_facade.get_election(election_id)
+        # return container.facades.elections.get_election(election_id)
