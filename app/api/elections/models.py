@@ -1,7 +1,8 @@
 from flask_restplus import Namespace, Resource, fields
 
 from app.api.elections import namespace
-from app.api.restrictions.models import restriction_response
+from app.api.restrictions.models import nested_restriction, restriction_response
+from app.api.options.models import nested_option, option_response
 
 election = namespace.model('Elections', {
     'name': fields.String(required=True, description='Election name'),
@@ -13,7 +14,13 @@ election_response = namespace.inherit('ElectionResponse', election, {
 })
 
 
-election_full_model = namespace.model('ElectionFull', {
+election_full_response_model = namespace.model('ElectionFull', {
+    'election': fields.Nested(election_response),
+    'restrictions': fields.Nested(restriction_response),
+    'options': fields.List(fields.Nested(option_response)),
+})
+
+election_user_response_model = namespace.model('ElectionFullResponse', {
     'election': fields.Nested(election),
     'restrictions': fields.Nested(restriction_response),
     'votes_number': fields.Integer(description='Total vote number'),
