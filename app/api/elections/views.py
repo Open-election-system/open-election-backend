@@ -86,6 +86,21 @@ class Election(Resource):
         return container.services.elections().delete(id)
 
 
+@namespace.route('/stats')
+@namespace.expect(parser)
+class ElectionStats(Resource):
+    
+    @namespace.doc('get_all_election_stats')
+    def get(self, id):
+        """
+        Get all elections stats
+        """
+        user_id = request.headers['user-id']
+        from app.api import container
+        return container.facades.options.get_option_stats(id)
+    
+    
+    
 @namespace.route('/stats/<id>')
 @namespace.expect(parser)
 @namespace.param('id', 'The election identifier')
@@ -98,4 +113,4 @@ class ElectionStats(Resource):
         """
         user_id = request.headers['user-id']
         from app.api import container
-        return container.facades.options.iterate_through_options()
+        return container.facades.options.get_option_stats(id)

@@ -6,7 +6,7 @@ class BaseIterator(collections.abc.Iterator):
     """
     def __init__(self, container):
         self.container = container
-        self.order = 0
+        self.order = -1
 
     def __next__(self):
         self.order += 1
