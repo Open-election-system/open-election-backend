@@ -1,5 +1,4 @@
 from app.api.users import collection, user_info_collection
-from app.api.elections import collection as election_collection
 from app.api.core.controllers.database import APIDatabaseController
 from app.api.core.services.entity import APIEntityServiceMixin
 
@@ -10,6 +9,9 @@ class UserService(APIEntityServiceMixin):
     
     @property
     def _EntityServiceMixin__collection(self):
+        """
+            Warning: don't change a name of the function.
+        """
         return APIDatabaseController(collection)
     
     @property
@@ -23,6 +25,9 @@ class UserInfoService(APIEntityServiceMixin):
     
     @property
     def _EntityServiceMixin__collection(self):
+        """
+            Warning: don't change a name of the function.
+        """
         return APIDatabaseController(user_info_collection)
     
     @property

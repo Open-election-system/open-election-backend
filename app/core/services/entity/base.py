@@ -26,7 +26,7 @@ class BaseEntityService:
     
     @abc.abstractmethod
     def batch_create(self, data_list):
-        return self.__colection.batch_create(data_list)
+        return self.__collection.batch_create(data_list)
     
     @abc.abstractmethod
     def update(self, id, data):

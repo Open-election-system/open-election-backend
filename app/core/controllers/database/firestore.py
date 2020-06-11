@@ -23,7 +23,7 @@ class DatabaseController(BaseDatabaseController):
     def get_one(self, id):
         try:
             if id:
-                doc = self.collection.document(id).get()
+                doc = self.collection.document(str(id)).get()
                 if doc.exists:
                     return doc.to_dict(), 200
                 else:
