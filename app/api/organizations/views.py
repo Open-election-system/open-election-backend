@@ -1,57 +1,57 @@
 from flask import request
 from flask_restplus import Resource
 
-from app.api.locations import namespace, location_info_namespace
+from app.api.organizations import namespace, organization_info_namespace
 
-from app.api.locations.models import location, location_response
+from app.api.organizations.models import organization, organization_response
 from app.api import container
 
 @namespace.route('')
-class LocationList(Resource):
-    @namespace.doc('list_locations')
-    @namespace.marshal_list_with(location)
+class OrganizationList(Resource):
+    @namespace.doc('list_organizations')
+    @namespace.marshal_list_with(organization)
     def get(self):
         """
-        Get all locations.
+        Get all organizations.
         """
-        return container.services.locations().get_all()
+        return container.services.organizations().get_all()
 
-    @namespace.doc('add_location')
-    @namespace.expect(location)
-    @namespace.response(200, 'Success', location_response)
+    @namespace.doc('add_organization')
+    @namespace.expect(organization)
+    @namespace.response(200, 'Success', organization_response)
     def post(self):
         """
-        Create a new location.
+        Create a new organization.
         """
         data = request.json
-        return container.services.locations().create(data)
+        return container.services.organizations().create(data)
 
 
 @namespace.route('/<id>')
 @namespace.doc(params={'election_id': {'description': 'The election id'}})
-@namespace.param('id', 'The location identifier')
-@namespace.response(404, 'location not found')
-class Location(Resource):
+@namespace.param('id', 'The organization identifier')
+@namespace.response(404, 'organization not found')
+class Organization(Resource):
     
-    @namespace.doc('get_location')
+    @namespace.doc('get_organization')
     def get(self, id):
         """
-        Get a location by id.
+        Get a organization by id.
         """
-        return container.services.locations().get_one(id)
+        return container.services.organizations().get_one(id)
 
-    @namespace.doc('update_location')
-    @namespace.expect(location)
+    @namespace.doc('update_organization')
+    @namespace.expect(organization)
     def put(self, id):
         """
-        Update existing location.
+        Update existing organization.
         """
         data = request.json
-        return container.services.locations().update(id, data)
+        return container.services.organizations().update(id, data)
 
     def delete(self, id):
         """
-        Delete existing location.
+        Delete existing organization.
         """
         from app.api import container
-        return container.services.locations().delete(id)
+        return container.services.organizations().delete(id)
