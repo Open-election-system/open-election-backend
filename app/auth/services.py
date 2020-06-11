@@ -2,11 +2,11 @@ from app.auth import collection as auth_collection
 from app.api.users import collection as user_collection
 from app.api.core.controllers.database import APIDatabaseController
 from app.auth.core.controllers.database import AuthDatabaseController
-from app.auth.core.controllers.entity import AuthEntityController
+from app.auth.core.services.entity import AuthEntityService
 
 from app.core.exceptions import EmailInUseException, IncorectCredentials
 
-class AuthController(AuthEntityController):
+class AuthService(AuthEntityService):
     
     __auth_collection = AuthDatabaseController(auth_collection)
     __user_collection = APIDatabaseController(user_collection)

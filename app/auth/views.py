@@ -2,12 +2,12 @@ from flask import request
 from flask_restplus import Namespace, Resource, fields
 
 from app.auth import namespace
-from app.auth.controllers import AuthController
+from app.auth.services import AuthService
 from app.auth.models import auth, login_response, error
 from app.api.users.models import user, user_response
 from app.core.exceptions import EmailInUseException, IncorectCredentials
 
-auth_controller = AuthController()
+auth_service = AuthService()
 
 @namespace.route('/login')
 class LoginResource(Resource):
@@ -21,7 +21,7 @@ class LoginResource(Resource):
         login a user.
         """
         data = request.json
-        return auth_controller.login(data)
+        return auth_service.login(data)
     
     
 @namespace.route('/register')
@@ -36,4 +36,4 @@ class RegisterResource(Resource):
         register a user.
         """
         data = request.json
-        return auth_controller.register(data)
+        return auth_service.register(data)

@@ -3,9 +3,9 @@ from flask_restplus import Resource
 
 from app.api.elections import namespace
 from app.api.elections.models import election
-from app.api.elections.controllers import ElectionController
+from app.api.elections.services import ElectionService
 
-election_controller = ElectionController()
+election_service = ElectionService()
 
 
 @namespace.route('')
@@ -16,7 +16,7 @@ class ElectionList(Resource):
         """
         Get all elections.
         """
-        return election_controller.get_all()
+        return election_service.get_all()
 
     @namespace.doc('add election')
     @namespace.expect(election)
@@ -25,7 +25,7 @@ class ElectionList(Resource):
         Create a new election.
         """
         data = request.json
-        return election_controller.create(data)
+        return election_service.create(data)
 
 
 @namespace.route('/<id>')
@@ -37,7 +37,7 @@ class Election(Resource):
         """
         Get a election by id.
         """
-        return election_controller.get_one(id)
+        return election_service.get_one(id)
 
     @namespace.doc('update_election')
     @namespace.expect(election)
@@ -46,10 +46,10 @@ class Election(Resource):
         Update existing election.
         """
         data = request.json
-        return election_controller.update(id, data)
+        return election_service.update(id, data)
 
     def delete(self, id):
         """
         Delete existing election.
         """
-        return election_controller.delete(id)
+        return election_service.delete(id)
