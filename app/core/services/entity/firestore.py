@@ -5,7 +5,7 @@ from app.core.controllers.database.firestore import DatabaseController
 
 class EntityServiceMixin(BaseEntityService):
     """
-        This class is not an instance of BaseEntityService cause it doesn't implement __colection property.
+        This class can't inherit BaseEntityService cause it doesn't implement __colection property.
         So, we call it a Mixin. (read python mixins)
     """
     def get_one(self, id):

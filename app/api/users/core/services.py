@@ -6,6 +6,8 @@ from app.api.core.services.entity import APIEntityServiceMixin
 
 class UserService(APIEntityServiceMixin):
     
+    __TABLE_NAME = 'user'
+    
     @property
     def _EntityServiceMixin__collection(self):
         return APIDatabaseController(collection)

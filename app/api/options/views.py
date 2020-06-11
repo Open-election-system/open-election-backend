@@ -3,9 +3,6 @@ from flask_restplus import Resource
 
 from app.api.options import namespace
 from app.api.options.models import option
-# from app.api.options.services import OptionService
-
-# option_service = OptionService()
 
 
 @namespace.route('')
