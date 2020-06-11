@@ -18,7 +18,7 @@ class RestrictionService(APIEntityServiceMixin):
     def __collection(self):
         return self._EntityServiceMixin__collection
 
-    def get_with_params(self, params):  # user info
+    def get_by_params(self, params):  # user info
         """
             default_restrictions = {
                 'age_from': 18,
@@ -73,3 +73,8 @@ class RestrictionService(APIEntityServiceMixin):
         # container.services.votings().get_by_equal_params({'election_id':election_id, 'user_id':user_id})
         # available_restrictions = query_result
         return query_result
+    
+
+    def get_by_election_id(self, election_id):
+        from app.api import container
+        return container.services.restrictions().get_by_equal_params({'election_id': election_id})

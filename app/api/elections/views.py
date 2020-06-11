@@ -8,7 +8,6 @@ parser = namespace.parser()
 parser.add_argument('user-id', help='user id', required=False, location='headers')
 
 @namespace.route('')
-@namespace.expect(parser)
 class ElectionList(Resource):
     
     @namespace.doc('list elections')
@@ -23,27 +22,28 @@ class ElectionList(Resource):
         
         user_id = request.headers['user-id'] if 'user-id' in request.headers else None
         if user_id is not None:
-            return container.facades.elections.get_elections(user_id)
+            return container.facades.elections.get_elections_by_user_id(user_id)
         else:
             return container.services.elections().get_all()
     
-    @namespace.doc('add ele ction')
-    @namespace.expect(election)
+    @namespace.doc('add an election')
+    @namespace.expect(election_full_model)
     def post(self):
         """
         Create a new election.
         """
         data = request.json
         from app.api import container
-        return container.services.elections().create(data)
+        
+        return container.facades.elections.create_election(data)
 
 
-@namespace.route('/all/')
+@namespace.route('/all')
 class ElectionListAll(Resource):
     
     @namespace.doc('list elections')
-    @namespace.marshal_list_with(election_full_response_model)
-    @namespace.response(200, 'Success', election_full_response_model)
+    @namespace.marshal_list_with(election_full_model)
+    @namespace.response(200, 'Success', election_full_model)
     def get(self):
         """
         Get all elections.
@@ -53,50 +53,60 @@ class ElectionListAll(Resource):
         return container.facades.elections().get_all_elections()
         
 @namespace.route('/<int:id>')
-@namespace.expect(parser)
 @namespace.param('id', 'The election identifier')
 @namespace.response(404, 'election not found')
 class Election(Resource):
     
     @namespace.doc('get_election')
+    @namespace.expect(parser)
     @namespace.response(200, 'Success', election_response)
-    def get(self, election_id):
+    def get(self, id):
         """
         Get an election by id.
         """
-        # user_id = request.headers['user-id']
-        # return container.elections_facade.get_election(election_id, user_id)
+        user_id = request.headers['user-id']
         from app.api import container
-        return container.services.elections().get_one(election_id)
+        return container.facades.elections.get_election(id, user_id)
 
     @namespace.doc('update_election')
     @namespace.expect(election)
-    def put(self, election_id):
+    def put(self, id):
         """
         Update existing election.
         """
         data = request.json
-        # return container.elections_facade.create_election(data)
         from app.api import container
-        return container.services.elections().update(election_id, data)
+        return container.services.elections().update(id, data)
 
-    def delete(self, election_id):
+    def delete(self, id):
         """
         Delete existing election.
         """
         from app.api import container
-        return container.services.elections().delete(election_id)
+        return container.services.elections().delete(id)
 
 
+@namespace.route('/stats')
+class ElectionStats(Resource):
+    
+    @namespace.doc('get_all_election_stats')
+    def get(self):
+        """
+        Get all elections stats
+        """
+        from app.api import container
+        return container.facades.elections.get_election_stats()
+    
+    
+    
 @namespace.route('/stats/<id>')
-@namespace.expect(parser)
 @namespace.param('id', 'The election identifier')
 class ElectionStats(Resource):
+    
     @namespace.doc('get_election')
-    def get(self, election_id):
+    def get(self, id):
         """
-        Get a election by id.
+        Get an election by id.
         """
-        # user_id = request.headers['user-id']
         from app.api import container
-        # return container.elections_facade.get_election(election_id)
+        return container.facades.options.get_option_stats_by_election_id(id)

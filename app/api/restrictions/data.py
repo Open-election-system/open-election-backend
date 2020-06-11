@@ -1,6 +1,6 @@
 default_restrictions = {
-    'ageFrom': 18,
-    'ageTo': None,
+    'age_from': 18,
+    'age_to': None,
     'votes_number': 1,
     'reatract': False,
     'start': '',  # now

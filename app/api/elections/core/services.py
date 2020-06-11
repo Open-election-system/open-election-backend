@@ -21,8 +21,8 @@ class ElectionService(APIEntityServiceMixin):
 
     def get_by_restriction(self, restriction):
         election_id = restriction['election_id']
-        available_election = self.__collection.get_by_equal_params({'id': int(election_id)})[0]
-        return available_election
+        available_election = self.__collection.get_by_equal_params({'id': int(election_id)})
+        return available_election[0]
     
     def can_user_vote_in_election(self, restriction, user_votes_number):
         reatract = False

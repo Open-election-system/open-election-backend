@@ -23,7 +23,6 @@ class RestrictionList(Resource):
         Create a new restriction.
         """
         data = request.json
-        print(request, request.json, data)
         from app.api import container
         return container.services.restrictions().create(data)
 

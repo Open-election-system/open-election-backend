@@ -14,10 +14,16 @@ election_response = namespace.inherit('ElectionResponse', election, {
 })
 
 
-election_full_response_model = namespace.model('ElectionFull', {
+election_full_model = namespace.model('ElectionFull', {
     'election': fields.Nested(election_response),
     'restrictions': fields.Nested(restriction_response),
     'options': fields.List(fields.Nested(option_response)),
+})
+
+election_full_response_model = namespace.model('ElectionFullUserResponse', {
+    'election': fields.Nested(election),
+    'restrictions': fields.Nested(nested_restriction),
+    'options': fields.List(fields.Nested(nested_option)),
 })
 
 election_user_response_model = namespace.model('ElectionFullResponse', {
@@ -26,3 +32,4 @@ election_user_response_model = namespace.model('ElectionFullResponse', {
     'votes_number': fields.Integer(description='Total vote number'),
     'can_vote': fields.Boolean(description=' If user can vote or revote'),
 })
+
