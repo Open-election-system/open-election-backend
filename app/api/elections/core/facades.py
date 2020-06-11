@@ -22,13 +22,9 @@ class ElectionFacade(APIBaseFacade):
     def get_election(cls, election_id, user_id):
         from app.api import container
         election = container.services.elections().get_one(str(election_id))
-        print(election)
-        restrictions = container.services.restrictions().get_by_equal_params({'election_id': election_id})
-        print(restrictions)
+        restrictions = container.services.restrictions().get_by_election_id(election_id)
         user_votes = container.services.votings().get_user_election_votes(election_id, user_id)
-        print(user_votes)
         options = container.services.options().get_by_election(election_id)
-        print("options", options)
         election = {'election': election, 'restrictions': restrictions, 'votes': user_votes, 'options': options}
         return election
 
