@@ -23,11 +23,11 @@ class ElectionList(Resource):
         
         user_id = request.headers['user-id'] if 'user-id' in request.headers else None
         if user_id is not None:
-            return container.facades.elections.get_elections(user_id)
+            return container.facades.elections.get_elections_by_user_id(user_id)
         else:
             return container.services.elections().get_all()
     
-    @namespace.doc('add ele ction')
+    @namespace.doc('add an election')
     @namespace.expect(election_full_model)
     def post(self):
         """
@@ -36,9 +36,23 @@ class ElectionList(Resource):
         data = request.json
         from app.api import container
         
-        return container.builders.elections.build(data)
+        return container.facades.elections.create_election(data)
 
 
+@namespace.route('/all/')
+class ElectionListAll(Resource):
+    
+    @namespace.doc('list elections')
+    @namespace.marshal_list_with(election_full_model)
+    @namespace.response(200, 'Success', election_full_response_model)
+    def get(self):
+        """
+        Get all elections.
+        """
+        from app.api import container
+        
+        return container.facades.elections().get_all_elections()
+        
 @namespace.route('/<int:id>')
 @namespace.expect(parser)
 @namespace.param('id', 'The election identifier')
@@ -54,7 +68,6 @@ class Election(Resource):
         user_id = request.headers['user-id']
         from app.api import container
         return container.facades.elections.get_election(id, user_id)
-        # return container.services.elections().get_one(id)
 
     @namespace.doc('update_election')
     @namespace.expect(election)
@@ -79,11 +92,12 @@ class Election(Resource):
 @namespace.expect(parser)
 @namespace.param('id', 'The election identifier')
 class ElectionStats(Resource):
+    
     @namespace.doc('get_election')
     def get(self, id):
         """
-        Get a election by id.
+        Get an election by id.
         """
-        # user_id = request.headers['user-id']
+        user_id = request.headers['user-id']
         from app.api import container
-        # return container.facades.elections.get_election(id)
+        return container.facades.elections.get_election(id)
