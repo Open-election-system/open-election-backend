@@ -8,12 +8,15 @@ class ElectionFacade(APIBaseFacade):
         
         elections = []
         user_info = container.facades.users.get_user_info(user_id)
-        print(user_info)
-        # available_restrictions = container.services.restrictions().get_with_params(user_info)
-        # for restriction in available_restrictions:
-        #     election = container.services.elections().get_by_restrictions(restriction.id)
-        #     user_votes_count = container.services.votings().count(election.id, user_id)
-        #     elections.append({'election': election, 'restrictions': restriction, 'votes_count': user_votes_count})
+        available_restrictions = container.services.restrictions().get_with_params(user_info)
+        for restriction in available_restrictions:
+            election = container.services.elections().get_by_restriction(restriction)
+            user_votes_number = container.services.votings().count_user_election_votes(election['id'], user_id)
+            
+            can_vote = container.services.elections().can_user_vote_in_election(restriction, user_votes_number)
+            
+            elections.append({'election': election, 'restrictions': restriction, 'votes_number': user_votes_number, 'can_vote': can_vote})
+        # print("elections", elections)
         return elections
 
     @classmethod
@@ -28,9 +31,9 @@ class ElectionFacade(APIBaseFacade):
     @classmethod
     def get_election_stats(cls, election_id):
         election_item = container.elections_service.get_one(election_id)
-        votes_count = container.vote_service.count(election_id)
+        votes_number = container.vote_service.count(election_id)
         options = container.options_service.get_by_election(election_id)
-        election = {'election': election_item, 'votes_count': votes_count, 'options': options}
+        election = {'election': election_item, 'votes_number': votes_number, 'options': options}
         return election
 
     @classmethod

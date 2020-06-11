@@ -2,7 +2,7 @@ from flask import request
 from flask_restplus import Resource
 
 from app.api.votes import namespace
-from app.api.votes.models import vote
+from app.api.votes.models import vote,vote_response
 
 
 
@@ -18,6 +18,8 @@ class VotingList(Resource):
         return container.services.votings().get_all()
 
     @namespace.doc('add_vote')
+    @namespace.expect(vote)
+    @namespace.response(200, 'Success', vote_response)
     def post(self):
         """
         Create a new vote.

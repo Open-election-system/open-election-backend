@@ -79,7 +79,6 @@ class DatabaseController(BaseDatabaseController):
             collection_ref = self.collection.document(str(id + 1))
             batch.set(collection_ref, item)
             id = id + 1
-        print(data_list, batch)
         batch.commit()
 
     def get_by_equal_params(self, filter_dict):
@@ -125,3 +124,20 @@ class DatabaseController(BaseDatabaseController):
         filtered_documents = filtered_documents.get()
         filtered_json = [document.to_dict() for document in filtered_documents]
         return filtered_json
+    
+    
+    def get_by_params_alternately(self, filter_list):
+        """
+            The function for quering collection data step by step in order not to raise gcloud exceptions.
+            (there are restrictions)
+            
+        """
+        filtered_documents = []
+
+        for filter_dict in filter_list:
+            query_result = self.get_by_any_params([filter_dict])
+            if len(filtered_documents) ==0:
+                filtered_documents = query_result
+            else:
+                filtered_documents = [result for result in query_result if result in filtered_documents]
+        return filtered_documents

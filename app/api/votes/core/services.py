@@ -24,5 +24,17 @@ class VotingService(APIEntityServiceMixin):
         # return self.__votes_collection.delete(id)
 
     def count_user_election_votes(self, election_id, user_id):
-        pass
-        # return self.__votes_collection.delete(id)
+        query_result = self.__collection.get_by_params_alternately([
+            {
+                "parameter": 'election_id',
+                "sign": u"==",
+                "value": int(election_id)
+            },
+            {
+                "parameter": 'user_id',
+                "sign": u"==",
+                "value": int(user_id)
+            },
+        ])
+        count = len(query_result)
+        return count
