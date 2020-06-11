@@ -21,17 +21,17 @@ class ElectionFacade(APIBaseFacade):
 
     @classmethod
     def get_election(cls, election_id, user_id):
-        election_item = container.elections_service.get_one(election_id)
-        restrictions = container.restrictions_service.get_one(election_item.restrictions_id)
-        user_votes = container.vote_service.get_by_params(election_id, user_id)
-        options = container.options_service.get_by_election(election_id)
+        election_item = container.services.elections().get_one(election_id)
+        restrictions = container.sevices.restrictions().get_one(election_item.restrictions_id)
+        user_votes = container.services.votings().get_by_params(election_id, user_id)
+        options = container.services.options().get_by_election(election_id)
         election = {'election': election_item, 'restrictions': restrictions, 'votes': user_votes, 'options': options}
         return election
 
     @classmethod
     def get_election_stats(cls, election_id):
-        election_item = container.elections_service.get_one(election_id)
-        votes_number = container.vote_service.count(election_id)
+        election_item = container.services.elections().get_one(election_id)
+        voteYs_number = container.service.votes().count(election_id)
         options = container.options_service.get_by_election(election_id)
         election = {'election': election_item, 'votes_number': votes_number, 'options': options}
         return election

@@ -18,7 +18,7 @@ class ElectionService(APIEntityServiceMixin):
     def __collection(self):
         return self._EntityServiceMixin__collection
     
-    
+
     def get_by_restriction(self, restriction):
         election_id = restriction['election_id']
         available_election = self.__collection.get_by_equal_params({'id': int(election_id)})[0]

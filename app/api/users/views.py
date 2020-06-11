@@ -26,7 +26,8 @@ class UserList(Resource):
         """
         data = request.json
         from app.api import container
-        return container.services.users().create(data)
+        # return container.services.users().create(data)
+        return container.facades.users.create(data)
 
 
 @namespace.route('/<id>')

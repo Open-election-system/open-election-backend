@@ -21,7 +21,7 @@ class ElectionBuilder(APIBaseBuilder):
 
     @classmethod
     def __build_election(cls, election):
-        return container.elections_service.create(election)
+        return container.services.elections().create(election)
 
     @classmethod
     def __build_restrictions(cls, restrictions):

@@ -27,4 +27,4 @@ class UserBuilder(APIBaseBuilder):
     def __build_user_info(cls, user_info):
         from app.api import container
         
-        return container.user_info_service.create(user_info)
+        return container.services.user_info().create(user_info)

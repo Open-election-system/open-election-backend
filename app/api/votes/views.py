@@ -40,7 +40,7 @@ class Voting(Resource):
         """
         # vote_col = db.collection('vote')
         # voting_col = db.collection('votings')
-        # votes = vote_service.get_many_to_many(vote_col, voting_col, voteId=id, votingId=None)
+        # votes = service.votes().get_many_to_many(vote_col, voting_col, voteId=id, votingId=None)
         from app.api import container
         return container.services.votings().get_one(id)
 

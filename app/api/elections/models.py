@@ -13,9 +13,9 @@ election_response = namespace.inherit('ElectionResponse', election, {
 })
 
 
-election_full_model = namespace.model('ElectionFull',{
-    'election': fields.List(fields.Nested(election)),
-    'restrictions': fields.List(fields.Nested(restriction_response)),
-    'votes_number': fields.Integer(description = 'Total vote number'),
-    'can_vote': fields.Boolean(description= ' If user can vote or revote'), 
+election_full_model = namespace.model('ElectionFull', {
+    'election': fields.Nested(election),
+    'restrictions': fields.Nested(restriction_response),
+    'votes_number': fields.Integer(description='Total vote number'),
+    'can_vote': fields.Boolean(description=' If user can vote or revote'),
 })
