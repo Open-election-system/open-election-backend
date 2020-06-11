@@ -23,7 +23,7 @@ class ElectionFacade(APIBaseFacade):
         from app.api import container
         
         elections=[]
-        election_list = container.services.elections().get_all()[0]
+        election_list = container.services.elections().get_all()
         for election in election_list:
             options = container.services.options().get_by_election_id(election['id'])
             restrictions = container.services.restrictions().get_by_election_id(election['id'])

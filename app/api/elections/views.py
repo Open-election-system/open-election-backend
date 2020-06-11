@@ -8,7 +8,6 @@ parser = namespace.parser()
 parser.add_argument('user-id', help='user id', required=False, location='headers')
 
 @namespace.route('')
-
 class ElectionList(Resource):
     
     @namespace.doc('list elections')
@@ -54,12 +53,12 @@ class ElectionListAll(Resource):
         return container.facades.elections().get_all_elections()
         
 @namespace.route('/<int:id>')
-@namespace.expect(parser)
 @namespace.param('id', 'The election identifier')
 @namespace.response(404, 'election not found')
 class Election(Resource):
     
     @namespace.doc('get_election')
+    @namespace.expect(parser)
     @namespace.response(200, 'Success', election_response)
     def get(self, id):
         """
@@ -76,7 +75,6 @@ class Election(Resource):
         Update existing election.
         """
         data = request.json
-        # return container.facades.elections.create_election(data)
         from app.api import container
         return container.services.elections().update(id, data)
 
@@ -100,5 +98,4 @@ class ElectionStats(Resource):
         """
         user_id = request.headers['user-id']
         from app.api import container
-        return container.facades.elections.get_election(id)
-1
+        return container.facades.options.iterate_through_options()

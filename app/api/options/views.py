@@ -44,9 +44,6 @@ class Option(Resource):
         """
         Get a option by id.
         """
-        # vote_col = db.collection('vote')
-        # voting_col = db.collection('votings')
-        # votes = option_service.get_many_to_many(vote_col, voting_col, optionId=id, votingId=None)
         from app.api import container
         return container.services.options().get_one(id)
 

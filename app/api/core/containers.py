@@ -32,8 +32,8 @@ class IoCBuiderContainer(EntityContainer):
 
 class IoCFacadeContainer(EntityContainer):
 
-    def __init__(self, election: APIBaseBuilder, user: APIBaseBuilder):
-        super(IoCFacadeContainer, self).__init__(election, user)
+    def __init__(self, election: APIBaseBuilder, user: APIBaseBuilder, option: APIEntityServiceMixin):
+        super(IoCFacadeContainer, self).__init__(election, user, option=option)
 
 
 class IoCContainer:

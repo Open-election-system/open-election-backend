@@ -42,3 +42,11 @@ class VotingService(APIEntityServiceMixin):
         query_result = self.get_user_election_votes(election_id, user_id)
         count = len(query_result)
         return count
+    
+    def get_by_option_id(self, option_id):
+        query_result = self.__collection.get_by_equal_params([
+            {
+                "option_id": option_id
+            }
+        ])
+        return query_result

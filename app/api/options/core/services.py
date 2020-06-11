@@ -8,7 +8,7 @@ class OptionService(APIEntityServiceMixin):
     __TABLE_NAME = 'options'
 
     @property
-    def _EntityServiceMixin__colection(self):
+    def _EntityServiceMixin__collection(self):
         """
             Warning: don't change a name of the function.
         """
@@ -16,7 +16,7 @@ class OptionService(APIEntityServiceMixin):
 
     @property
     def __collection(self):
-        return self._EntityServiceMixin__colection
+        return self._EntityServiceMixin__collection
 
     def get_by_election_id(self, election_id):
         return self.__collection.get_by_equal_params({'election_id': int(election_id)})
