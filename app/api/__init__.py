@@ -21,8 +21,10 @@ def create_container(container, service_container, buider_container, facade_cont
     from app.api.votes import VotingService
     from app.api.restrictions import RestrictionService
     from app.api.options import OptionService
+    from app.api.organizations import OrganizationService
+    from app.api.locations import LocationService
 
-    service_container = service_container(ElectionService, UserService, VotingService, RestrictionService, OptionService)
+    service_container = service_container(ElectionService, UserService, UserInfoService, VotingService, RestrictionService, OptionService, OrganizationService, LocationService)
     service_container.setdefaultattr(UserInfoService.get_table_name(), UserInfoService)
     builder_container = buider_container(ElectionBuilder, UserBuilder)
     facade_container = facade_container(ElectionFacade, UserFacade)

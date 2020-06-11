@@ -3,22 +3,21 @@ from flask_restplus import Resource
 
 from app.api.users import namespace, user_info_namespace
 
-from app.api.users.models import user, user_response, user_info, user_info_response
+from app.api.users.models import user, user_response, user_info, user_info_response, user_full_info
 
 
 @namespace.route('')
 class UserList(Resource):
     @namespace.doc('list_users')
-    @namespace.marshal_list_with(user)
+    @namespace.marshal_list_with(user_full_info)
     def get(self):
         """
         Get all users.
         """
         from app.api import container
-        return container.services.users().get_all()
+        return container.facades.users().get_all()
 
     @namespace.doc('add_user')
-    @namespace.expect(user)
     @namespace.response(200, 'Success', user_response)
     def post(self):
         """
@@ -27,7 +26,7 @@ class UserList(Resource):
         data = request.json
         from app.api import container
         # return container.services.users().create(data)
-        return container.facades.users.create(data)
+        return container.facades.users.create_user(data)
 
 
 @namespace.route('/<id>')
