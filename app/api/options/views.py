@@ -3,9 +3,9 @@ from flask_restplus import Resource
 
 from app.api.options import namespace
 from app.api.options.models import option
-from app.api.options.services import OptionService
+from app.api.options.controllers import OptionController
 
-option_service = OptionService()
+option_controller = OptionController()
 
 
 @namespace.route('')
@@ -16,7 +16,7 @@ class OptionList(Resource):
         """
         Get all options.
         """
-        return option_service.get_all()
+        return option_controller.get_all()
 
     @namespace.doc('add_option')
     @namespace.expect(option)
@@ -25,7 +25,7 @@ class OptionList(Resource):
         Create a new option.
         """
         data = request.json
-        return option_service.create(data)
+        return option_controller.create(data)
 
     @namespace.doc('add_batch_option')
     def post(self):
@@ -33,7 +33,7 @@ class OptionList(Resource):
         Create batch options.
         """
         data = request.json
-        return option_service.batch_create(data)
+        return option_controller.batch_create(data)
 
 
 @namespace.route('/<id>')
@@ -47,8 +47,8 @@ class Option(Resource):
         """
         # vote_col = db.collection('vote')
         # voting_col = db.collection('votings')
-        # votes = option_service.get_many_to_many(vote_col, voting_col, optionId=id, votingId=None)
-        return option_service.get_one(id)
+        # votes = option_controller.get_many_to_many(vote_col, voting_col, optionId=id, votingId=None)
+        return option_controller.get_one(id)
 
     @namespace.doc('update_option')
     @namespace.expect(option)
@@ -57,10 +57,10 @@ class Option(Resource):
         Update existing option.
         """
         data = request.json
-        return option_service.update(id, data)
+        return option_controller.update(id, data)
 
     def delete(self, id):
         """
         Delete existing option.
         """
-        return option_service.delete(id)
+        return option_controller.delete(id)
