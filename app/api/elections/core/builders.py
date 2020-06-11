@@ -1,6 +1,6 @@
 
 from app.api.core.builders import APIBaseBuilder
-
+from app.api.elections.models import default_restrictions
 
 class ElectionBuilder(APIBaseBuilder):
     
@@ -29,15 +29,6 @@ class ElectionBuilder(APIBaseBuilder):
     @classmethod
     def __build_restrictions(cls, restrictions):
         from app.api import container
-        default_restrictions = {
-            'age_from': 18,
-            'age_to': None,
-            'votes_number': 1,
-            'reatract': False,
-            'start': '',  # now
-            'end': '',  # now + day
-            'organization': None,
-        }
         return container.services.restrictions().create({**default_restrictions, **restrictions})
 
     @classmethod
