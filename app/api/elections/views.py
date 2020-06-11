@@ -43,8 +43,8 @@ class ElectionList(Resource):
 class ElectionListAll(Resource):
     
     @namespace.doc('list elections')
-    @namespace.marshal_list_with(election_full_response_model)
-    @namespace.response(200, 'Success', election_full_response_model)
+    @namespace.marshal_list_with(election_full_model)
+    @namespace.response(200, 'Success', election_full_model)
     def get(self):
         """
         Get all elections.
