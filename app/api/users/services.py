@@ -1,10 +1,10 @@
 from app.api.users import collection
 from app.api.elections import collection as election_collection
 from app.api.core.controllers.database import APIDatabaseController
-from app.api.core.services.entity import APIEntityService
+from app.api.core.services.entity import APIEntityServiceMixin
 
 
-class UserService(APIEntityService):
+class UserService(APIEntityServiceMixin):
 
     @property
     def _EntityService__collection(self):
@@ -12,7 +12,7 @@ class UserService(APIEntityService):
 
 # # Facade pattern
 
-# class UserMakerController(APIEntityService):
+# class UserMakerController(APIEntityServiceMixin):
     
 #     __users_collection = APIDatabaseController(collection)
 #     __elections_collection = APIDatabaseController(election_collection)
