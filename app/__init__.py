@@ -32,12 +32,12 @@ def add_namespaces_to_api(api):
     from app.auth import auth_namespace
     # Add namespaces
     api.add_namespace(user_namespace)
-    api.add_namespace(user_info_namespace)
     api.add_namespace(election_namespace)
     api.add_namespace(restriction_namespace)
     api.add_namespace(option_namespace)
     api.add_namespace(vote_namespace)
     api.add_namespace(auth_namespace)
+    api.add_namespace(user_info_namespace)
     return api
 
 def register_blueprint(application, blueprint):
