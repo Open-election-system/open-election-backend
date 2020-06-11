@@ -6,6 +6,7 @@ from app.api.elections.models import election
 from app.api.elections.services import ElectionService
 
 election_service = ElectionService()
+container = {}
 
 
 @namespace.route('')
@@ -16,7 +17,9 @@ class ElectionList(Resource):
         """
         Get all elections.
         """
-        return election_service.get_all()
+        # user_id = request.headers['user-id']
+        # return container.elections_facade.get_elections(user_id)
+        return election_controller.get_all()
 
     @namespace.doc('add election')
     @namespace.expect(election)
@@ -33,23 +36,38 @@ class ElectionList(Resource):
 @namespace.response(404, 'election not found')
 class Election(Resource):
     @namespace.doc('get_election')
-    def get(self, id):
+    def get(self, election_id):
         """
         Get a election by id.
         """
-        return election_service.get_one(id)
+        # user_id = request.headers['user-id']
+        # return container.elections_facade.get_election(election_id, user_id)
+        return election_service.get_one(election_id)
 
     @namespace.doc('update_election')
     @namespace.expect(election)
-    def update(self, id):
+    def update(self, election_id):
         """
         Update existing election.
         """
         data = request.json
-        return election_service.update(id, data)
+        # return container.elections_facade.create_election(data)
+        return election_service.update(election_id, data)
 
-    def delete(self, id):
+    def delete(self, election_id):
         """
         Delete existing election.
         """
-        return election_service.delete(id)
+        return election_service.delete(election_id)
+
+
+@namespace.route('/stats/<id>')
+@namespace.param('id', 'The election identifier')
+class ElectionStats(Resource):
+    @namespace.doc('get_election')
+    def get(self, election_id):
+        """
+        Get a election by id.
+        """
+        # user_id = request.headers['user-id']
+        # return container.elections_facade.get_election(election_id)
