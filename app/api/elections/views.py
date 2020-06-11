@@ -38,7 +38,7 @@ class ElectionList(Resource):
         return container.facades.elections.create_election(data)
 
 
-@namespace.route('/all/')
+@namespace.route('/all')
 class ElectionListAll(Resource):
     
     @namespace.doc('list elections')
@@ -87,22 +87,19 @@ class Election(Resource):
 
 
 @namespace.route('/stats')
-@namespace.expect(parser)
 class ElectionStats(Resource):
     
     @namespace.doc('get_all_election_stats')
-    def get(self, id):
+    def get(self):
         """
         Get all elections stats
         """
-        user_id = request.headers['user-id']
         from app.api import container
-        return container.facades.options.get_option_stats(id)
+        return container.facades.elections.get_election_stats()
     
     
     
 @namespace.route('/stats/<id>')
-@namespace.expect(parser)
 @namespace.param('id', 'The election identifier')
 class ElectionStats(Resource):
     
@@ -111,6 +108,5 @@ class ElectionStats(Resource):
         """
         Get an election by id.
         """
-        user_id = request.headers['user-id']
         from app.api import container
-        return container.facades.options.get_option_stats(id)
+        return container.facades.options.get_option_stats_by_election_id(id)

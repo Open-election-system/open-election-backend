@@ -10,3 +10,10 @@ class ElectionObject:
         self.can_vote = can_vote
         self.options = options
         self.votes = votes
+        
+        
+class ElectionReportAgregationObject:
+    
+    def __init__(self, elections=[]):
+        self.elections = elections
+    

@@ -1,7 +1,7 @@
 from app.api.core.facades import APIBaseFacade
 from app.core.serializers import Serializer
 from app.api.elections.serializers import ElectionObject
-
+from app.api.elections.core.iterators import ElectionAgregator
 
 class ElectionFacade(APIBaseFacade):
     
@@ -42,6 +42,7 @@ class ElectionFacade(APIBaseFacade):
     @classmethod
     def get_election(cls, election_id, user_id):
         from app.api import container
+        
         election = container.services.elections().get_one(str(election_id))
         restrictions = container.services.restrictions().get_by_election_id(election_id)
         user_votes = container.services.votings().get_user_election_votes(election_id, user_id)
@@ -62,3 +63,12 @@ class ElectionFacade(APIBaseFacade):
     @classmethod
     def create_election(cls, data):
         return container.builders.elections.build(data)
+
+
+    @classmethod
+    def get_election_stats(cls):
+        election_agregator = ElectionAgregator()
+        for n in election_agregator: pass # don't remove this line
+        print(election_agregator.report.__dict__)
+        serialized_report = Serializer.serialize(election_agregator.report)
+        return serialized_report

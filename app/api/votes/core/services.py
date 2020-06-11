@@ -50,3 +50,9 @@ class VotingService(APIEntityServiceMixin):
             }
         )
         return query_result
+
+    def get_by_election_and_option_id(self, election_id, option_id):
+        return self.__collection.get_by_equal_params({
+            'election_id': int(election_id),
+            'option_id': int(option_id)
+            })

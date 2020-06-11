@@ -1,4 +1,5 @@
 import jmespath
+from copy import deepcopy
 
 from app.core.iterators.agregators import BaseAggregator
 from app.core.iterators.iterators import BaseIterator
@@ -13,9 +14,9 @@ class OptionAgregator(BaseAggregator):
         from app.api import container
 
         self.election_id = election_id
-        self.report = OptionReportAgregationObject(election_id)
+        self.report = deepcopy(OptionReportAgregationObject(election_id))
         self.data = container.services.options().get_by_election_id(election_id)
-        print(self.data)
+        # print(self.data)
         super(OptionAgregator, self).__init__(self.data)
         
     @property
@@ -33,7 +34,7 @@ class OptionIterator(BaseIterator):
     
     def iteration(self):
         self.item = self.container.data[self.order]
-        print(self.item)
+        # print(self.item)
         self.count_votes()
         
         
@@ -41,11 +42,12 @@ class OptionIterator(BaseIterator):
         from app.api import container
         
         self.option_id = self.item['id']
-        self.votes = container.services.votings().get_by_option_id(self.option_id)
+        self.votes = deepcopy(container.services.votings().get_by_election_and_option_id(self.container.election_id, self.option_id))
         # check if option is alreade in report or not
         search_option = jmespath.search(f'[?option_id==`{self.option_id}`]', self.container.report.options)
+        # print(search_option)
         option_votes = search_option['vote_number'] if len(search_option)>0 else 0
-        print(self.option_id, self.votes, option_votes)
+        # print(self.option_id, self.votes, option_votes)
         option_votes += len(self.votes)
         option_agregator = OptionAgregationObject(self.option_id, option_votes)
         option_agregator_serializer = Serializer.serialize(option_agregator)
