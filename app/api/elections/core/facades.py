@@ -19,7 +19,8 @@ class ElectionFacade(APIBaseFacade):
             
             can_vote = container.services.elections().can_user_vote_in_election(restrictions, user_votes_number)
             print(restrictions)
-            election_obj = ElectionObject(election=election, restrictions=restrictions, votes_number=user_votes_number, can_vote=can_vote)
+            options = container.services.options().get_by_election_id(election['id'])
+            election_obj = ElectionObject(election=election, restrictions=restrictions, options=options, votes_number=user_votes_number, can_vote=can_vote)
             serialized_election = Serializer.serialize(election_obj)
             elections.append(serialized_election)
         return elections

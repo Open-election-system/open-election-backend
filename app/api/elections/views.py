@@ -2,7 +2,7 @@ from flask import request
 from flask_restplus import Resource
 
 from app.api.elections import namespace
-from app.api.elections.models import election, election_response, election_full_model, election_user_response_model,  election_full_response_model
+from app.api.elections.models import election, election_response, election_full_model, election_user_response_model,  election_full_response_model, election_full_response_model_
 
 parser = namespace.parser()
 parser.add_argument('user-id', help='user id', required=False, location='headers')
@@ -12,8 +12,8 @@ class ElectionList(Resource):
     
     @namespace.doc('list elections')
     @namespace.expect(parser)
-    @namespace.marshal_list_with(election_user_response_model)
-    @namespace.response(200, 'Success', election_user_response_model)
+    @namespace.marshal_list_with(election_full_response_model_)
+    @namespace.response(200, 'Success', election_full_response_model_)
     def get(self):
         """
         Get all elections.
@@ -42,8 +42,8 @@ class ElectionList(Resource):
 class ElectionListAll(Resource):
     
     @namespace.doc('list elections')
-    @namespace.marshal_list_with(election_full_model)
-    @namespace.response(200, 'Success', election_full_model)
+    @namespace.marshal_list_with(election_full_response_model)
+    @namespace.response(200, 'Success', election_full_response_model)
     def get(self):
         """
         Get all elections.
