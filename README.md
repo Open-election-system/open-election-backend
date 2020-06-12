@@ -1,6 +1,12 @@
 # Open election system
 
-## Adding secret keys
+## The Aim of the project
+
+Project is created in order to practise using design patterns in the backend development.
+
+## Project setup
+
+### Adding secret keys
 In the root directory, create a file **env_variables.yaml** and paste the following content to it:
 
 ```shell
@@ -10,7 +16,7 @@ env_variables:
 ```
 In the root directory, create a file **key.json** and paste Firebase key to it.
 
-## Running  a project
+### Running a project
 
 ### ubuntu
 ```shell
@@ -27,10 +33,12 @@ python3 setup.py develop
 python3 wsgi.py
 ```
 
-## Explore Swagger
+### Explore Swagger
 
 <p>Local version: https://0.0.0.0:8080/api/1/ </p>
 <p>Development version: https://lyrical-amulet-276713.ew.r.appspot.com/api/1/ </p>
+
+## Project devlopment
 
 ## Adding changes:
 
@@ -40,3 +48,29 @@ pip freeze > requirements.txt
 ```
 
 All changes in the **dev** branch, automatically deploy to Google App Engine.
+
+## Project structure
+
+### Patterns
+#### Architecture-level patterns: 
+- Model-View-Presenter architecture
+- Inversion of Control with IoC Container and Dependency Injection
+
+#### Business logic patterns
+- Facade
+- Builder
+- IoC and DI
+- Decorator
+- Serializer
+- Application factory
+
+
+### Diagrams
+#### Use case diagram
+![Use case diagram](diagrams/classDiagram-2.png)
+
+#### Class diagram
+![Class diagram](diagrams/classDiagram-2.png)
+
+#### Design pattern class diagram
+![Design pattern class diagram](diagrams/classDiagram-3.png)
