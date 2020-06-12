@@ -17,11 +17,7 @@ def create_container(container, service_container, buider_container, facade_cont
         - other: container.facades.users.get_user_info(user_id)
     """
     from app.api.elections import ElectionService, ElectionBuilder, ElectionFacade
-<<<<<<< HEAD
-    from app.api.votes import VotingService
-=======
     from app.api.votes import VotingService, VotingFacade
->>>>>>> app-redesign
     from app.api.restrictions import RestrictionService
     from app.api.options import OptionService, OptionFacade
     from app.api.organizations import OrganizationService
