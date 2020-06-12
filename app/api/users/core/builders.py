@@ -41,10 +41,10 @@ class UserBuilder(APIBaseBuilder):
     def __build_organization(cls, organization):
         from app.api import container
         find_organization = container.services.organizations().get_by_params(organization)
-        return container.services.organizations().create(organization) if len(find_organization) == 0 else find_organization['id']
+        return container.services.organizations().create(organization) if find_organization is None else find_organization['id']
     
     @classmethod
     def __build_location(cls, location):
         from app.api import container
         find_location = container.services.locations().get_by_params(location)
-        return container.services.locations().create(location) if len(find_location) == 0 else find_location['id']
+        return container.services.locations().create(location) if find_location is None else find_location['id']
