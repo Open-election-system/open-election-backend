@@ -22,3 +22,6 @@ class LocationService(APIEntityServiceMixin):
         location = self.__collection.get_one(location_id)
         return location[0]
     
+    def get_by_params(self, data):
+        location = self.__collection.get_by_equal_params(data)
+        return location[0] if len(location) != 0 else None

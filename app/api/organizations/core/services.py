@@ -22,3 +22,7 @@ class OrganizationService(APIEntityServiceMixin):
         organization = self.__collection.get_one(organization_id)
         return organization[0]
     
+    def get_by_params(self, data):
+        organization = self.__collection.get_by_equal_params(data)
+        return organization[0] if len(organization) != 0 else None
+        
