@@ -30,12 +30,11 @@ class RestrictionService(APIEntityServiceMixin):
                 'organization': None,
             }
         """
-        age = int(params['age'])
-        organization = params['organization']
-        election_id = params['user_id']
+        age = int(params['user_info']['age'])
+        organization = params['organization']['organization']
         time_now = datetime.datetime.now().timestamp()
-
-        query_result = self.__collection.get_by_params_alternately([
+        # if age i
+        query = [
             # age
             {
                 "parameter": 'age_from',
@@ -58,20 +57,18 @@ class RestrictionService(APIEntityServiceMixin):
                 "sign": u">=",
                 "value": time_now
             },
-            # organization
-            {
-                "parameter": 'organization',
-                "sign": u"==",
-                "value": organization
-            },
-        ])
+            # # organization
+            # {
+            #     "parameter": 'organization',
+            #     "sign": u"==",
+            #     "value": organization
+            # },
+        ]
+        
+        
+        query_result = self.__collection.get_by_params_alternately(query)
 
         
-        # TODO get votes number and check with reatract
-
-        # from app.api import container
-        # container.services.votings().get_by_equal_params({'election_id':election_id, 'user_id':user_id})
-        # available_restrictions = query_result
         return query_result
     
 

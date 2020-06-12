@@ -10,23 +10,26 @@ class EntityContainer:
     def __init__(self, election=None, user=None, user_info=None, voting=None, restriction=None, option=None, organization=None, location=None):
         self.elections = election
         self.users = user
-        self.user_info = user_info
         self.votings = voting
         self.restrictions = restriction
         self.options = option
         self.organizations = organization
         self.locations = location
+        self.user_info = user_info
     
     def setdefaultattr(self, name, value):
         return setdefaultattr(self, name, value)
 
 class IoCServiceContainer(EntityContainer):
 
-    def __init__(self, election: APIEntityServiceMixin, user: APIEntityServiceMixin, user_info: APIEntityServiceMixin, 
+    def __init__(self, election: APIEntityServiceMixin, user: APIEntityServiceMixin,
+                 user_info: APIEntityServiceMixin ,
                 voting: APIEntityServiceMixin, restriction: APIEntityServiceMixin, option: APIEntityServiceMixin, 
                 organization: APIEntityServiceMixin, location: APIEntityServiceMixin):
         super(IoCServiceContainer, self).__init__(
-            election, user, user_info, voting, restriction, option, organization, location)
+            election, user, 
+            user_info,
+             voting, restriction, option, organization, location)
 
 
 class IoCBuiderContainer(EntityContainer):
