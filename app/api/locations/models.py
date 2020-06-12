@@ -5,9 +5,9 @@ from app.api.locations import namespace
 # Input models
 
 location = namespace.model('Locations', {
+    'district': fields.String(required=True, description='The user district'),
     'city': fields.String(required=True, description='The user city'),
-    'state': fields.String(required=True, description='The user state'),
-    'country': fields.String(required=True, description='The user country')
+    'region': fields.String(required=True, description='The user region')
 })
 
 # Output models

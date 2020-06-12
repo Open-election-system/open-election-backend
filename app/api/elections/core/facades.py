@@ -11,14 +11,16 @@ class ElectionFacade(APIBaseFacade):
         
         elections = []
         user_info = container.facades.users.get_user_info(user_id)
+        print(user_info)
         available_restrictions = container.services.restrictions().get_by_params(user_info)
         for restrictions in available_restrictions:
             election = container.services.elections().get_by_restriction(restrictions)
             user_votes_number = container.services.votings().count_user_election_votes(election['id'], user_id)
             
             can_vote = container.services.elections().can_user_vote_in_election(restrictions, user_votes_number)
-            
-            election_obj = ElectionObject(election=election, restrictions=restrictions, votes_number=user_votes_number, can_vote=can_vote)
+            print(restrictions)
+            options = container.services.options().get_by_election_id(election['id'])
+            election_obj = ElectionObject(election=election, restrictions=restrictions, options=options, votes_number=user_votes_number, can_vote=can_vote)
             serialized_election = Serializer.serialize(election_obj)
             elections.append(serialized_election)
         return elections

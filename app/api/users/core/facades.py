@@ -12,7 +12,7 @@ class UserFacade(APIBaseFacade):
         organizaion = container.services.organizations().get_by_organization_id(user_info['organization_id'])
         location = container.services.locations().get_by_location_id(user_info['location_id'])
         user.append({'user_info': user_info, 'organization': organizaion, 'location': location})
-        return user
+        return user[0]
 
     @classmethod
     def get_user(cls, user_id):

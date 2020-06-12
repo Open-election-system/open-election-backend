@@ -19,12 +19,12 @@ user_info = namespace.model('UserInfo', {
     'surname': fields.String(required=True, description='The user surname'),
 })
 
-user_full_info = namespace.model('UserFullInfo', {
-    'user': fields.Nested(user),
-    'user_info': fields.Nested(user_info),
-    'organization': fields.Nested(organization),
-    'location': fields.Nested(location)
-})
+# user_full_info = namespace.model('UserFullInfo', {
+#     'user': fields.Nested(user),
+#     'user_info': fields.Nested(user_info),
+#     # 'organization': fields.Nested(organization),
+#     # 'location': fields.Nested(location)
+# })
 
 # Output models
 
