@@ -32,7 +32,6 @@ class ElectionIterator(BaseIterator):
     
     def iteration(self):
         self.item = self.container.data[self.order]
-        # print(self.item)
         self.count_votes()
         
         
@@ -41,5 +40,4 @@ class ElectionIterator(BaseIterator):
         
         self.election_id = self.item['id']
         election = container.facades.options.get_option_stats_by_election_id(self.election_id)
-        # print(self.election_id, election)
         self.container.report.elections.append(election)

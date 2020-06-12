@@ -70,6 +70,5 @@ class ElectionFacade(APIBaseFacade):
     def get_election_stats(cls):
         election_agregator = ElectionAgregator()
         for n in election_agregator: pass # don't remove this line
-        print(election_agregator.report.__dict__)
         serialized_report = Serializer.serialize(election_agregator.report)
         return serialized_report
