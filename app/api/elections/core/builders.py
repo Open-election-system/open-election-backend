@@ -1,6 +1,6 @@
 
 from app.api.core.builders import APIBaseBuilder
-from app.api.elections.models import default_restrictions
+from app.api.elections.data import default_restrictions
 
 class ElectionBuilder(APIBaseBuilder):
     

@@ -9,7 +9,7 @@ from app.api.users.models import user, user_response, user_info, user_info_respo
 @namespace.route('')
 class UserList(Resource):
     @namespace.doc('list_users')
-    @namespace.marshal_list_with(user_full_info)
+    # @namespace.marshal_list_with(user_full_info)
     def get(self):
         """
         Get all users.
