@@ -2,7 +2,7 @@
 
 ## The Aim of the project
 
-Project is created in order to practise using design patterns in the backend development.
+The project is created in order to practice using design patterns in backend development.
 
 ## Project setup
 
@@ -74,3 +74,15 @@ All changes in the **dev** branch, automatically deploy to Google App Engine.
 
 #### Design pattern class diagram
 ![Design pattern class diagram](diagrams/classDiagram-3.png)
+
+
+## Technologies
+
+The following technologies were used:
+#### Backend:
+- python3
+- flask
+#### Database:
+- Firestore
+#### Development
+- Google cloud platform, App Engine
