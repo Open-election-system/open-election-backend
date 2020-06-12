@@ -26,7 +26,9 @@ class UserBuilder(APIBaseBuilder):
     @classmethod
     def __build_user(cls, user):
         from app.api import container
-        
+        from app.core.exceptions import EmailInUseException
+        find_user = container.services.users().get_by_params({'email': user['email']})
+        if find_user is not None: raise EmailInUseException()
         return container.services.users().create(user)
 
     @classmethod
@@ -38,11 +40,11 @@ class UserBuilder(APIBaseBuilder):
     @classmethod
     def __build_organization(cls, organization):
         from app.api import container
-        
-        return container.services.organizations().create(organization)
+        find_organization = container.services.organizations().get_by_params(organization)
+        return container.services.organizations().create(organization) if find_organization is None else find_organization['id']
     
     @classmethod
     def __build_location(cls, location):
         from app.api import container
-        
-        return container.services.locations().create(location)
+        find_location = container.services.locations().get_by_params(location)
+        return container.services.locations().create(location) if find_location is None else find_location['id']
