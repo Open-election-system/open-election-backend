@@ -37,7 +37,7 @@ pycodestyle==2.6.0
 pyrsistent==0.16.0
 pytz==2020.1
 requests==2.23.0
-rsa==4.0
+rsa==4.1
 six==1.15.0
 toml==0.10.1
 uritemplate==3.0.1
